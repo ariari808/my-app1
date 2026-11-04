@@ -11,7 +11,7 @@
 4. Включите Pages: Settings → Pages → Source: Deploy from a branch, Branch: main, папка / (root) → Save.
 5. Разрешите записывать курс: Settings → Actions → General → Workflow permissions → Read and write permissions → Save.
 6. Запустите обновление один раз вручную: вкладка Actions → Update NBU rates → Run workflow.
-7. Адрес приложения: https://ВАШ-ЛОГИН.github.io/finance/ (появится через 1-2 минуты).
+7. Адрес приложения: https:///ariari808.github.io/finance/ (появится через 1-2 минуты).
 
 ## Как это работает
 - Каждый день в 12:00 по Киеву GitHub скачивает официальный курс НБУ и обновляет `rates.json`.
