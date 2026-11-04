@@ -2,17 +2,6 @@
 
 Личное приложение для учёта финансов с автообновлением курса НБУ.
 
-## Как запустить на GitHub Pages
-1. Создайте репозиторий на github.com (кнопка New), например `finance`. Он должен быть Public.
-2. Загрузите файлы: Add file → Upload files, перетащите `index.html`, `rates.json`, `README.md`.
-3. Добавьте автообновление курса: Add file → Create new file, в поле имени введите
-   `.github/workflows/rates.yml` (слеши создадут папки) и вставьте содержимое файла `rates.yml` из архива.
-   Нажмите Commit changes.
-4. Включите Pages: Settings → Pages → Source: Deploy from a branch, Branch: main, папка / (root) → Save.
-5. Разрешите записывать курс: Settings → Actions → General → Workflow permissions → Read and write permissions → Save.
-6. Запустите обновление один раз вручную: вкладка Actions → Update NBU rates → Run workflow.
-7. Адрес приложения: https:///ariari808.github.io/finance/ (появится через 1-2 минуты).
-
 ## Как это работает
 - Каждый день в 12:00 по Киеву GitHub скачивает официальный курс НБУ и обновляет `rates.json`.
 - Приложение при открытии читает `rates.json` с того же сайта, а если файла нет, пробует запросить НБУ напрямую.
