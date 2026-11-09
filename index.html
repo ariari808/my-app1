@@ -1,411 +1,284 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Мои финансы</title>
+<title>Lime — личные финансы</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;700&display=swap">
 <style>
-:root{--bg:#eef1f4;--card:#fff;--ink:#1b2a33;--mute:#6b7a85;--line:#dbe1e6;--inc:#1f7a5a;--exp:#c2443a;--acc:#2f4b7c;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a20;--card:#1a252d;--ink:#e8eef2;--mute:#8d9ca7;--line:#2b3943;--inc:#4cc09a;--exp:#ef7b70;--acc:#8fb0e8;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#121a20;--card:#1a252d;--ink:#e8eef2;--mute:#8d9ca7;--line:#2b3943;--inc:#4cc09a;--exp:#ef7b70;--acc:#8fb0e8;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Onest,system-ui,sans-serif;font-variant-numeric:tabular-nums}
-main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
-.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.top h1{font-size:18px;font-weight:700;margin:0}
-.month{display:flex;align-items:center;gap:6px}
-.month span{min-width:130px;text-align:center;font-weight:500}
-button{font:inherit;color:inherit;cursor:pointer}
-.ib{background:var(--card);border:1px solid var(--line);border-radius:8px;width:34px;height:34px}
-.hero{padding:8px 0 20px}
-.hero small{color:var(--mute)}
-.bal{font-size:clamp(40px,12vw,64px);font-weight:700;line-height:1.1;letter-spacing:-.02em}
-.split{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--line);margin:16px 0 10px}
-.split i{display:block;transition:width .3s}
-.split .a{background:var(--inc)}.split .b{background:var(--exp)}
-.legend{display:flex;justify-content:space-between;font-size:15px}
-.legend b{font-weight:700}.legend .a b{color:var(--inc)}.legend .b b{color:var(--exp)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
-.card h2{font-size:16px;margin:0 0 12px;font-weight:700}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:12px}
-.seg button{border:0;background:transparent;padding:8px;border-radius:7px;font-weight:500;color:var(--mute)}
-.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;min-width:0}
-input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.full{grid-column:1/-1}
-.add{width:100%;margin-top:12px;background:var(--acc);color:#fff;border:0;border-radius:8px;padding:11px;font-weight:700}
-:root[data-theme="dark"] .add{color:#0d1519}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .add{color:#0d1519}}
-.cat{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;margin:8px 0;font-size:15px}
-.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--acc)}
-.tx{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
-.tx:first-of-type{border-top:0}
-.tx .m{flex:1;min-width:0}
-.tx .m div{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tx .m small{color:var(--mute)}
-.tx .s{font-weight:700}.s.i{color:var(--inc)}.s.e{color:var(--exp)}
-.del{background:none;border:0;color:var(--mute);font-size:20px;line-height:1;padding:4px 8px}
-.empty{color:var(--mute);margin:0}
-.ghead{display:flex;justify-content:space-between;align-items:baseline;font-size:17px;margin-bottom:8px}
-.ghead span{color:var(--inc);font-weight:700}
-.bar.big{height:14px;border-radius:7px}
-.bar.big i{background:var(--inc);transition:width .3s}
-.gnums{display:flex;justify-content:space-between;gap:8px;color:var(--mute);font-size:14px;margin:8px 0 14px}
-.gb{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px;font-weight:700}
-.glink{background:none;border:0;color:var(--mute);text-decoration:underline;padding:0;margin-top:14px;font-size:14px}
-#gview .add{margin-top:12px}
-#gview .grid .add{margin-top:0}
+:root{--bg:#f6f7f5;--card:#fff;--cb:#dfe2da;--ink:#111;--mute:#696d65;--line:#dfe2da;--in:#f1f2ee;--chip:#eceee8;--lime:#c7f63d;--limeink:#14251b;--acc:#4f7000;--inc:#12864f;--exp:#cc2945;--hbg:#111;--hink:#fff;--hmute:#a3a89e;--hline:#33372f;--pill:#111;--pillink:#fff;--sh:0 20px 50px rgba(0,0,0,.14);color-scheme:light}
+:root[data-theme="dark"]{--bg:#111;--card:#191919;--cb:transparent;--ink:#fff;--mute:#a3a89e;--line:#33372f;--in:#111;--chip:#222;--acc:#c7f63d;--inc:#7ee0a6;--exp:#ff6b82;--hbg:#f6f7f5;--hink:#111;--hmute:#696d65;--hline:#dfe2da;--pill:#f6f7f5;--pillink:#111;--sh:0 20px 50px rgba(0,0,0,.6);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.4 Onest,system-ui,sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+h1,h2,p{margin:0}
 [hidden]{display:none!important}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--card);border:1px solid var(--line);padding:4px;border-radius:12px;margin-bottom:16px}
-.tabs button{border:0;background:transparent;padding:10px 6px;border-radius:8px;font-weight:500;color:var(--mute)}
-.tabs button.on{background:var(--acc);color:#fff;font-weight:700}
-:root[data-theme="dark"] .tabs button.on{color:#0d1519}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tabs button.on{color:#0d1519}}
-/* ---- redesign ---- */
-:root{--bg:#f2f3f7;--card:#fff;--ink:#141a2e;--mute:#666d86;--line:#e3e6ee;--acc:#2340b8;--hero:#2340b8;--yel:#f5c518;--inc:#12805c;--exp:#c8372d;--disp:Unbounded,Onest,system-ui,sans-serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1322;--card:#181d33;--ink:#eceffa;--mute:#8e95b0;--line:#2a3050;--acc:#7f9bff;--hero:#2a3fb0;--inc:#4cc9a0;--exp:#f27f74}}
-:root[data-theme="dark"]{--bg:#0f1322;--card:#181d33;--ink:#eceffa;--mute:#8e95b0;--line:#2a3050;--acc:#7f9bff;--hero:#2a3fb0;--inc:#4cc9a0;--exp:#f27f74}
-.top h1{font:700 15px/1 var(--disp);letter-spacing:-.01em}
-.ib{border-radius:50%;border:0;background:var(--card)}
-.tabs{background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:0;gap:0;margin-bottom:18px}
-.tabs button{border-radius:0;padding:12px 6px;border-bottom:3px solid transparent;margin-bottom:-1px;font-weight:500}
-.tabs button.on{background:none;color:var(--ink)!important;font-weight:700;border-bottom-color:var(--yel)}
-.hero{position:relative;overflow:hidden;background:var(--hero);color:#fff;border-radius:28px;padding:22px 20px 20px;margin-bottom:16px}
-.hero::after{content:"₴";position:absolute;right:-14px;top:-34px;width:84px;height:84px;border-radius:50%;background:var(--yel);color:#141a2e;font:700 30px/118px var(--disp);text-align:center;pointer-events:none}
-.hero>*{position:relative;z-index:1}
-.hero small{color:rgba(255,255,255,.75)}
-.bal{font:700 clamp(30px,9vw,46px)/1.15 var(--disp);letter-spacing:-.03em;margin-top:6px}
-.split{height:12px;border-radius:6px;background:rgba(255,255,255,.22)}
-.split .a{background:#7fe3b8}.split .b{background:#ffa79d}
-.legend .a b{color:#9af0cc}.legend .b b{color:#ffb8b0}
-.card{border:0;border-radius:18px;padding:18px}
-.card h2{font:500 14px/1.3 var(--disp);margin-bottom:14px}
-input,select{border-radius:12px;padding:11px 12px;border:1px solid transparent}
-.add{background:var(--yel);color:#141a2e!important;border-radius:999px;padding:12px}
-.gb{border-radius:999px;border:0;background:var(--bg)}
-.bar{height:10px}
-.bar.big{height:20px;border-radius:10px}
-.bar.big i{background:repeating-linear-gradient(90deg,var(--yel) 0 14px,#d9a900 14px 16px)}
-.ghead b{font:500 15px var(--disp)}
-.ghead span{color:var(--acc);font:700 15px var(--disp)}
-.seg{border-radius:14px}.seg button{border-radius:10px}
-/* ---- redesign 2: lime / ink / capsules ---- */
-:root{--bg:#f4f2ec;--card:#fff;--ink:#231f1c;--mute:#6f6a64;--line:#dcd8cf;--acc:#231f1c;--hero:#d2f58a;--yel:#d2f58a;--inc:#12864f;--exp:#e0344f;--disp:Onest,system-ui,sans-serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171412;--card:#231f1c;--ink:#f4f2ec;--mute:#9a948b;--line:#38322d;--acc:#d2f58a;--hero:#d2f58a;--inc:#7ee0a6;--exp:#ff6b82}}
-:root[data-theme="dark"]{--bg:#171412;--card:#231f1c;--ink:#f4f2ec;--mute:#9a948b;--line:#38322d;--acc:#d2f58a;--hero:#d2f58a;--inc:#7ee0a6;--exp:#ff6b82}
-.top h1{font:500 16px/1 var(--disp);letter-spacing:0}
-.ib{background:var(--card);border:1px solid var(--line)}
-.tabs{display:grid;gap:8px;border:0;margin-bottom:16px}
-.tabs button,.tabs button.on{border:1px solid var(--ink);border-radius:2px;margin:0;padding:10px 6px;background:transparent;color:var(--ink)!important;font-weight:500}
-.tabs button.on{background:var(--ink);color:var(--card)!important}
-.hero{background:var(--hero);color:#231f1c;border-radius:4px;padding:22px 20px 20px}
-.hero::after{right:18px;top:18px;width:52px;height:52px;border-radius:2px;background:#231f1c;color:#d2f58a;font:500 22px/52px var(--disp)}
-.hero small{color:rgba(35,31,28,.7)}
-.bal{font:300 clamp(40px,12vw,60px)/1.05 var(--disp);letter-spacing:-.035em;margin:28px 0 4px}
-.split{background:rgba(35,31,28,.18)}
-.split .a{background:#231f1c}.split .b{background:#e0344f}
-.legend{gap:10px}
-.legend span{flex:1;display:flex;flex-direction:column;gap:2px;padding:10px 18px;border-radius:999px;font-size:13px}
-.legend span b{font-size:16px;font-weight:700}
-.legend .a{background:#fff;color:#231f1c}.legend .a b{color:#231f1c}
-.legend .b{background:#e0344f;color:#fff}.legend .b b{color:#fff}
-.card{border:1px solid var(--line);border-radius:4px;padding:18px}
-.card h2{display:flex;align-items:center;gap:10px;font:500 15px/1.3 var(--disp)}
-.card h2::before{content:"";width:11px;height:11px;background:var(--yel);outline:1px solid var(--ink);outline-offset:-1px}
-input,select{border-radius:999px;padding:11px 16px;border:1px solid var(--line)}
-.add{background:var(--yel);color:#231f1c!important}
-.gb{background:transparent;border:1px solid var(--ink)}
-.seg{border-radius:999px;background:var(--bg)}
-.seg button{border-radius:999px}
-.seg button.on{background:var(--ink);color:var(--card);box-shadow:none}
-.bar i{background:var(--ink)}
-.bar.big{height:22px;background:#231f1c;border:1px solid var(--line);border-radius:999px}
-.bar.big i{background:#d2f58a}
-.ghead b{font:500 16px var(--disp)}
-.ghead span{background:#f0c4f4;color:#231f1c;border-radius:999px;padding:2px 12px;font:500 14px var(--disp)}
-/* ---- dark theme: thin colored outlines ---- */
-:root{--edge:var(--line)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--edge:rgba(210,245,138,.38)}}
-:root[data-theme="dark"]{--edge:rgba(210,245,138,.38)}
-.card,input,select,.ib,.bar.big{border-color:var(--edge)}
-.tx{border-top-color:var(--edge)}
-input:focus-visible,select:focus-visible{border-color:var(--acc)}
-@media (prefers-color-scheme:dark){
-:root:not([data-theme="light"]) .tabs button:not(.on),:root:not([data-theme="light"]) .gb{border-color:rgba(210,245,138,.55)}
-:root:not([data-theme="light"]) #p-goal .card{border-color:rgba(240,196,244,.45)}
-}
-:root[data-theme="dark"] .tabs button:not(.on),:root[data-theme="dark"] .gb{border-color:rgba(210,245,138,.55)}
-:root[data-theme="dark"] #p-goal .card{border-color:rgba(240,196,244,.45)}
-/* ---- arrows, dropdown, motion ---- */
-.ib{display:grid;place-items:center;color:var(--ink);transition:background .2s,color .2s,border-color .2s,transform .15s}
-.ib:hover{background:var(--yel);color:#231f1c;border-color:var(--yel)}
-.ib:active{transform:scale(.9)}
-input[type=number]{-moz-appearance:textfield}
-input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-input::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.65;transition:opacity .2s}
-input::-webkit-calendar-picker-indicator:hover{opacity:1}
-.dd{position:relative}
-.ddb{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--edge);border-radius:999px;padding:11px 16px;text-align:left;transition:border-color .2s}
-.ddb svg{flex:none;transition:transform .25s}
-.dd.open .ddb{border-color:var(--acc)}
-.dd.open .ddb svg{transform:rotate(180deg)}
-.ddl{list-style:none;margin:0;padding:6px;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:10;background:var(--card);border:1px solid var(--edge);border-radius:18px;box-shadow:0 12px 28px rgba(0,0,0,.14);opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);transform-origin:top;transition:opacity .2s,transform .2s,visibility 0s .2s}
-.dd.open .ddl{opacity:1;visibility:visible;transform:none;transition:opacity .2s,transform .2s,visibility 0s}
-.ddl li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:999px;cursor:pointer;transition:background .15s}
-.ddl li::before{content:"";flex:none;width:8px;height:8px}
-.ddl li:hover{background:var(--yel);color:#231f1c}
-.ddl li[aria-selected=true]{font-weight:700}
-.ddl li[aria-selected=true]::before{background:var(--yel);outline:1px solid var(--ink);outline-offset:-1px}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}}
-@keyframes grow{from{transform:scaleX(0)}}
+hr{border:0;height:1px;background:var(--line);margin:18px 0}
+.ic{flex:none}.acc{color:var(--acc)}.mut{color:var(--mute)}.sm{font-size:12px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.app{display:flex;min-height:100vh}
+.side{width:224px;flex:none;border-right:1px solid var(--line);padding:32px 20px 28px;display:flex;flex-direction:column;gap:36px;position:sticky;top:0;height:100vh}
+.brand{display:flex;flex-direction:column;gap:12px;padding-left:12px}
+.logo{width:114px;height:auto;color:var(--ink)}
+.brand small{color:var(--mute);font-size:11px;letter-spacing:1.3px}
+.tabs{display:flex;flex-direction:column;gap:8px}
+.tabs button{display:flex;align-items:center;gap:14px;height:52px;padding:0 16px;border-radius:999px;color:var(--mute);font-weight:500;transition:background .25s,color .25s}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{background:var(--lime);color:var(--limeink)}
+.hint{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:16px;background:var(--card);border:1px solid var(--cb);color:var(--mute);font-size:13px;line-height:1.5}
+.main{flex:1;min-width:0}
+.tb{height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid var(--line);position:relative;z-index:6}
+.bar-r{display:flex;align-items:center;gap:20px}
+.month{display:flex;align-items:center;gap:14px}
+.month span{min-width:104px;text-align:center;text-transform:capitalize}
+.vr{width:1px;height:24px;background:var(--line)}
+.ib{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:var(--mute);transition:background .2s,color .2s,transform .15s}
+.ib:hover{color:var(--ink);background:var(--chip)}.ib:active{transform:scale(.92)}
+.ib.round{width:40px;height:40px;background:var(--card);border:1px solid var(--cb);color:var(--ink)}
+.sun{display:none}:root:not([data-theme="dark"]) .sun{display:grid}:root:not([data-theme="dark"]) .moon{display:none}
+main{max-width:1320px;padding:32px 40px 64px}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:28px}
+.ph h1{font:500 40px/1.1 Onest,sans-serif;letter-spacing:-.035em}
+.ph p{margin-top:8px;color:var(--mute)}
+.pri,.add{display:inline-flex;align-items:center;justify-content:center;gap:12px;height:52px;padding:0 22px;border-radius:999px;background:var(--lime);color:var(--limeink);font-weight:500;transition:transform .15s,filter .2s}
+.pri::after{content:"+";font-size:20px;font-weight:300;line-height:1}
+.pri:hover,.add:hover{filter:brightness(1.05);transform:translateY(-1px)}.pri:active,.add:active{transform:scale(.98)}
+.pri.w{width:100%;margin-top:26px}
+.gb{height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--line);font-weight:500;transition:background .2s}.gb:hover{background:var(--chip)}
+.lnk{display:inline-flex;align-items:center;gap:8px;color:var(--acc);font-size:12px}
+.cols{display:grid;gap:24px;align-items:start}
+.c1{grid-template-columns:minmax(0,680fr) minmax(0,432fr)}
+.c2{grid-template-columns:minmax(0,456fr) minmax(0,656fr)}
+.c3{grid-template-columns:minmax(0,656fr);max-width:656px}
+.col{display:flex;flex-direction:column;gap:24px;min-width:0}
 .panel:not([hidden]){animation:rise .4s cubic-bezier(.2,.7,.2,1)}
-.tx{animation:rise .35s cubic-bezier(.2,.7,.2,1) both}
-.bar i{transform-origin:left;animation:grow .7s cubic-bezier(.2,.7,.2,1)}
-.tabs button,.add,.gb,.seg button,input{transition:background .2s,color .2s,border-color .2s,transform .15s}
-.add:hover,.gb:hover{transform:translateY(-1px)}
-.add:active,.gb:active{transform:scale(.97)}
-.tabs button:not(.on):hover{background:var(--yel);color:#231f1c!important;border-color:var(--yel)}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-/* ---- round + frosted glass ---- */
-:root{--glass:rgba(255,255,255,.55);--glass-in:rgba(255,255,255,.55);--gedge:rgba(255,255,255,.85);--shadow:0 10px 40px rgba(35,31,28,.09);--b1:rgba(210,245,138,.8);--b2:rgba(240,196,244,.7);--b3:rgba(210,245,138,.45)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--glass:rgba(35,31,28,.55);--glass-in:rgba(255,255,255,.06);--gedge:rgba(210,245,138,.38);--shadow:0 10px 40px rgba(0,0,0,.4);--b1:rgba(210,245,138,.22);--b2:rgba(240,196,244,.18);--b3:rgba(210,245,138,.12)}}
-:root[data-theme="dark"]{--glass:rgba(35,31,28,.55);--glass-in:rgba(255,255,255,.06);--gedge:rgba(210,245,138,.38);--shadow:0 10px 40px rgba(0,0,0,.4);--b1:rgba(210,245,138,.22);--b2:rgba(240,196,244,.18);--b3:rgba(210,245,138,.12)}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(440px 440px at 6% 4%,var(--b1),transparent 70%),radial-gradient(480px 480px at 98% 40%,var(--b2),transparent 70%),radial-gradient(540px 540px at 18% 96%,var(--b3),transparent 70%)}
-.card{border-radius:28px;padding:20px;background:var(--glass);border-color:var(--gedge);-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5);box-shadow:var(--shadow)}
-#p-ops .card:first-child{position:relative;z-index:2}
-.hero{border-radius:32px;box-shadow:var(--shadow)}
-.hero::after{border-radius:50%}
-.card h2::before{border-radius:50%}
-.tabs button,.tabs button.on{border-radius:999px}
-.tabs button:not(.on){background:var(--glass-in);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
-.ib,.gb{background:var(--glass-in);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
-.ib:hover{background:var(--yel)}
-input,.ddb{background:var(--glass-in);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.seg{background:var(--glass-in);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.ddl{border-radius:24px;background:var(--glass);border-color:var(--gedge);-webkit-backdrop-filter:blur(24px) saturate(1.6);backdrop-filter:blur(24px) saturate(1.6)}
-:root:not([data-theme="dark"]) .ddl{background:rgba(255,255,255,.75)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ddl{background:rgba(35,31,28,.78)}}
-:root[data-theme="dark"] .ddl{background:rgba(35,31,28,.78)}
-/* ---- currency coin + floating blobs ---- */
-.hero::after{display:none}
-.hero{z-index:3}
-.hero .cd{position:absolute;right:18px;top:18px;z-index:3}
-.coin{width:52px;height:52px;border-radius:50%;border:0;background:#231f1c;color:#d2f58a;font:500 21px/1 var(--disp);cursor:pointer;transition:transform .25s}
-.coin:hover{transform:scale(1.08) rotate(-10deg)}
-.coin:active{transform:scale(.94)}
-.cd .ddl{left:auto;right:0;width:200px;color:var(--ink)}
-.cs{display:inline-block;width:24px;font-weight:700}
-body::before{inset:-20%;background:radial-gradient(440px 440px at 14% 12%,var(--b1),transparent 70%),radial-gradient(540px 540px at 24% 90%,var(--b3),transparent 70%);animation:drift1 20s ease-in-out infinite alternate}
-body::after{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;background:radial-gradient(500px 500px at 88% 42%,var(--b2),transparent 70%);animation:drift2 26s ease-in-out infinite alternate}
-@keyframes drift1{from{transform:translate(0,0) scale(1)}50%{transform:translate(12%,8%) scale(1.15)}to{transform:translate(-8%,16%) scale(1)}}
-@keyframes drift2{from{transform:translate(0,0) scale(1.05)}50%{transform:translate(-14%,-10%) scale(1)}to{transform:translate(6%,14%) scale(1.18)}}
-@media (prefers-reduced-motion:reduce){body::before,body::after{animation:none!important}}
-/* ---- calendar ---- */
-#cal.open .ddb svg{transform:none}
-.calp{padding:14px}
-.calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-weight:500;text-transform:capitalize}
-.calh .ib{width:32px;height:32px}
-.calg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;animation:rise .25s}
-.wd{font-style:normal;text-align:center;font-size:12px;color:var(--mute);padding:4px 0}
-.day{aspect-ratio:1;border:0;border-radius:50%;background:transparent;color:var(--ink);font:inherit;font-size:14px;cursor:pointer;transition:background .15s,color .15s,transform .15s}
-.day:hover{background:var(--yel);color:#231f1c;transform:scale(1.08)}
-.day.today{box-shadow:inset 0 0 0 1px var(--ink)}
-.day.sel{background:var(--ink);color:var(--card);font-weight:700}
-.calt{display:block;margin:10px auto 0;border:1px solid var(--edge);background:transparent;color:var(--ink);border-radius:999px;padding:6px 18px;font:inherit;font-size:14px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
-.calt:hover{background:var(--yel);color:#231f1c;border-color:var(--yel)}
-/* ---- calendar: compact + frostier ---- */
-#cal .calp{left:0;right:auto;width:min(252px,100%);padding:10px;border-radius:20px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(60px) saturate(1.8);backdrop-filter:blur(60px) saturate(1.8)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #cal .calp{background:rgba(35,31,28,.96)}}
-:root[data-theme="dark"] #cal .calp{background:rgba(35,31,28,.96)}
-.calh{margin-bottom:6px;font-size:14px}
-.calh .ib{width:28px;height:28px}
-.calg{gap:2px}
-.wd{font-size:11px;padding:2px 0}
-.day{font-size:13px}
-.calt{margin-top:6px;padding:4px 14px;font-size:13px}
-/* ---- FOP calculator ---- */
-.tabs{grid-template-columns:repeat(4,1fr)}
-.tabs button{font-size:14px;padding:10px 4px}
-.fr{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:46px;border-bottom:1px solid var(--edge)}
-.fr b{font-weight:500}
-.fr.tot{font-weight:700;font-size:17px}.fr.tot b{font-weight:700}
-.fr.net{margin-top:12px;padding:0 18px;border:0;border-radius:999px;background:var(--yel);color:#231f1c;font-weight:700;font-size:17px}
-.fr.net b{font-weight:700}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:8px;vertical-align:middle}
-.fi{display:flex;align-items:center;gap:8px}
-.fi input{width:112px;text-align:right;padding:7px 14px}
-.fi em{font-style:normal;color:var(--mute);font-size:14px;min-width:26px}
-#f-save{margin-top:16px}
-.note{color:var(--mute);font-size:13px;line-height:1.5;margin:14px 0 0}
-/* ---- FOP v2 ---- */
-.bigin{width:100%;font:300 40px/1.1 var(--disp);letter-spacing:-.03em;padding:12px 20px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px}
-.chip{border:1px solid var(--edge);background:var(--glass-in);color:var(--ink);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
-.chip:hover:not(.on){background:var(--yel);color:#231f1c;border-color:var(--yel)}
-.chip.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
-.fr small{color:var(--mute);font-size:13px;margin-left:6px;font-weight:400}
-.fr b small{margin-left:8px}
-.rr{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;color:var(--mute);font-size:13px;line-height:1.4}
-.rr .gb{padding:6px 14px;font-size:13px;font-weight:500;white-space:nowrap}
-/* ---- goal conversion ---- */
-.gtap{cursor:pointer}
-.conv{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.2,.7,.2,1)}
-.conv.open{grid-template-rows:1fr}
-.conv>div{overflow:hidden;min-height:0}
-.crows{padding:4px 0 14px}
-.cr{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--edge);font-size:15px}
-.cr .mut{color:var(--mute);font-size:13px}
-.cr b{font-weight:500}
-.cn{color:var(--mute);font-size:12px;margin:8px 0 0}
-/* ---- notebooks ---- */
-.top{position:relative;z-index:6}
-.month span{min-width:108px}
-.bk .ddl{left:0;right:auto;width:min(280px,86vw);padding:8px}
-.bkb{width:auto;max-width:160px;padding:8px 14px;font-weight:500;font-size:15px}
-.bkb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bkl{list-style:none;margin:0 0 8px;padding:0}
-.bkf{border-top:1px solid var(--edge);padding-top:10px}
-.bkf input{width:100%;margin-bottom:8px;padding:9px 14px}
-.bkrow{display:flex;gap:8px}
-.bkrow .add,.bkrow .gb{flex:1;margin:0;padding:9px 8px;font-size:14px}
-/* ---- notebook panel polish ---- */
-#bk .ddl{transform-origin:top left;padding:10px;border-radius:24px;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(60px) saturate(1.8);backdrop-filter:blur(60px) saturate(1.8);box-shadow:0 24px 60px rgba(0,0,0,.28)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #bk .ddl{background:rgba(30,26,23,.97)}}
-:root[data-theme="dark"] #bk .ddl{background:rgba(30,26,23,.97)}
-.bkb{gap:8px}
-.bkb>svg:first-child{color:var(--acc)}
-.bkt{margin:2px 8px 8px;color:var(--mute);font-size:13px}
-.bkl li{padding:8px 10px;gap:12px;border-radius:18px}
-.bkl li::before{display:none}
-.bki{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;background:var(--bg);color:var(--ink);transition:background .2s}
-.bkm{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
-.bkm b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bkm small{color:var(--mute);font-size:12px}
-.bkc{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%}
-.bkl li[aria-selected=true]{background:rgba(210,245,138,.3)}
-.bkl li[aria-selected=true] .bkm b{font-weight:700}
-.bkl li[aria-selected=true] .bki{background:var(--yel);color:#231f1c}
-.bkl li[aria-selected=true] .bkc{background:var(--ink);color:var(--card)}
-.bkl li:hover{background:var(--yel)}
-.bkl li:hover .bkm small{color:#231f1c;opacity:.7}
-.bkl li:hover .bki{background:rgba(35,31,28,.12);color:#231f1c}
-.bkf{margin-top:4px}
-.bkf input{background:var(--bg)}
-.bkrow .add,.bkrow .gb{padding:10px 8px}
-.bkdel{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:9px 12px;border:1px solid transparent;border-radius:999px;background:transparent;color:var(--exp);font:inherit;font-size:14px;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
-.bkdel:hover{border-color:var(--exp)}
-.bkdel.sure{background:var(--exp);color:#fff;border-color:var(--exp)}
-/* ---- per-operation currency ---- */
-#txc{margin:0}
-.tx .s{text-align:right;white-space:nowrap}
-.tx .s small{display:block;font-weight:400;color:var(--mute);font-size:12px}
-/* ---- chart + forecast ---- */
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.card{background:var(--card);border:1px solid var(--cb);border-radius:28px;padding:28px}
+.card.hl{background:var(--hbg);color:var(--hink);border-radius:32px;border:0}
+.card.hl .mut{color:var(--hmute)}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.addp{width:100%;margin-top:18px}
+.ch h2{font:500 20px/1.2 Onest,sans-serif;letter-spacing:-.01em}
+.tag{font-size:11px;letter-spacing:.8px;color:var(--mute)}
+.lb{display:block;margin:20px 0 10px;color:var(--mute);font-size:12px}
+.note{margin-top:14px;text-align:center;color:var(--mute);font-size:12px;line-height:1.5}.note.l{text-align:left}
+input[type=text],input[type=number],.fi,.ddb{width:100%;height:54px;padding:0 20px;border-radius:999px;border:1px solid var(--line);background:var(--in);color:var(--ink);font:inherit;transition:border-color .2s}
+input::placeholder{color:var(--mute);opacity:.8}
+input:focus{outline:0;border-color:var(--acc)}
+input[type=number]{-moz-appearance:textfield}input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ddb{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left}
+.fi{display:flex;align-items:center;gap:8px;padding:0 20px}.fi input{border:0;background:none;height:auto;padding:0;width:100%}.fi em{font-style:normal;color:var(--mute)}
+.amtrow{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:14px}
+.bigin{border:0!important;background:none!important;height:auto!important;padding:0!important;font:300 64px/1.1 Onest,sans-serif!important;letter-spacing:-.04em;min-width:0}
+.sym{font:300 28px/1 Onest,sans-serif;color:var(--mute)}
+.chips,.seg{display:flex;gap:6px}
+.chip{flex:1;height:42px;border-radius:999px;background:var(--chip);color:var(--ink);font-size:13px;transition:background .2s,color .2s}
+.chip:hover:not(.on){background:var(--line)}
+.chip.on,.seg button.on{background:var(--pill);color:var(--pillink)}
+.seg{padding:4px;border-radius:999px;background:var(--in);border:1px solid var(--line)}
+.seg button{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:999px;color:var(--mute);font-weight:500;transition:background .2s,color .2s}
+.dd{position:relative}
+.ddl{list-style:none;margin:0;padding:8px;position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--sh);opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);transform-origin:top;transition:opacity .2s,transform .2s,visibility 0s .2s}
+.dd.open .ddl{opacity:1;visibility:visible;transform:none;transition:opacity .2s,transform .2s,visibility 0s}
+.ddb svg{transition:transform .25s}.dd.open .ddb svg{transform:rotate(180deg)}#cal.open .ddb svg{transform:none}
+.ddl li{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:999px;cursor:pointer;transition:background .15s}
+.ddl li::before{content:"";width:8px;height:8px;flex:none;border-radius:50%}
+.ddl li:hover{background:var(--chip)}
+.ddl li[aria-selected=true]{font-weight:500}.ddl li[aria-selected=true]::before{background:var(--lime)}
+.bk .ddl{width:min(300px,86vw);right:auto}.cd .ddl{left:auto;right:0;width:190px;top:calc(100% + 6px)}
+.bkb{width:auto;height:44px;padding:0 16px;gap:12px;background:var(--card);border:1px solid var(--cb);font-weight:500}
+.bkb span{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card:has(.dd.open){position:relative;z-index:8}
+.hero{background:var(--hbg);color:var(--hink);border-radius:32px;padding:32px;position:relative;z-index:3}
+.hh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.hh small{color:var(--hmute);font-size:14px}
+.coin{display:flex;align-items:center;gap:6px;font-size:12px}.coin::after{content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg) translateY(-2px)}
+.cd .ddl{color:var(--ink)}.cs{display:inline-block;width:24px;font-weight:500}
+.bal{font:300 clamp(48px,7vw,88px)/1 Onest,sans-serif;letter-spacing:-.06em;margin-bottom:26px}
+.split{display:none}
+.hero hr,.hero .legend{border-color:var(--hline)}
+.legend{display:flex;gap:32px;border-top:1px solid var(--hline);padding-top:20px}
+.legend>span{display:flex;align-items:center;gap:12px;flex:1}
+.legend .a .ic{color:var(--inc)}.legend .b .ic{color:var(--exp)}
+:root:not([data-theme="dark"]) .hero .legend .a .ic{color:#7ee0a6}:root:not([data-theme="dark"]) .hero .legend .b .ic{color:#ff6b82}
+.legend em{display:block;font-style:normal;color:var(--hmute);font-size:12px;margin-bottom:4px}.legend b{font:500 24px/1.1 Onest,sans-serif}
+.lg{display:flex;gap:20px;margin-bottom:14px;font-size:11px;color:var(--mute)}
+.lg i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;vertical-align:1px}.d1{background:var(--ink)}.d2{background:var(--mute)}.d3{background:var(--acc)}
 #chart svg{width:100%;height:auto;display:block}
 .gl{stroke:var(--line);stroke-width:1}
-.bi{fill:var(--inc)}.be{fill:var(--exp)}
-.bi.f,.be.f{fill-opacity:.2;stroke-width:1.5;stroke-dasharray:3 3}
-.bi.f{stroke:var(--inc)}.be.f{stroke:var(--exp)}
-.bi,.be{transform-box:fill-box;transform-origin:bottom;animation:growy .6s cubic-bezier(.2,.7,.2,1)}
-@keyframes growy{from{transform:scaleY(0)}}
-.ml{fill:var(--mute);font-size:11px}.ml.cur{fill:var(--ink);font-weight:700}
-.lg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:13px;color:var(--mute)}
-.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-.lg .s1{background:var(--inc)}.lg .s2{background:var(--exp)}.lg .s3{border:1.5px dashed var(--mute)}
-.fh3{margin:16px 0 2px;color:var(--mute);font-size:13px}
-.fp{color:var(--mute);font-size:13px;line-height:1.5;margin:14px 0 0}
-.pi{color:var(--inc)}.pe{color:var(--exp)}
+.bi{fill:var(--ink)}.be{fill:var(--mute)}
+.bi.f,.be.f{fill:none;stroke-width:1.5;stroke-dasharray:3 3}.bi.f{stroke:var(--acc)}.be.f{stroke:var(--mute)}
+.bi,.be{transform-box:fill-box;transform-origin:bottom;animation:growy .6s cubic-bezier(.2,.7,.2,1)}@keyframes growy{from{transform:scaleY(0)}}
+.ml{fill:var(--mute);font-size:7.5px}.ml.cur{fill:var(--ink);font-weight:500}.ml.fc{fill:var(--acc)}
+.fnote{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:11px;margin:8px 0 0}
+.eyb{color:var(--acc);font-size:12px;margin-bottom:10px}.fbig{font:300 39px/1.1 Onest,sans-serif;letter-spacing:-.05em;margin-bottom:10px}
+.frow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
+.frow small{display:block;color:var(--mute);font-size:12px;margin-top:4px}.frow .v{font:500 20px/1 Onest,sans-serif;letter-spacing:-.03em;white-space:nowrap}
+.fp{color:var(--mute);font-size:12px;line-height:1.6;margin-top:14px}
+.fr{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px}
+.fr.big b{font:300 32px/1.1 Onest,sans-serif;letter-spacing:-.04em}.fr.tot b{font:500 24px/1 Onest,sans-serif}.fr.tot span{font-weight:500}.fr small{color:var(--mute);font-weight:400}
+.empty{color:var(--mute)}
+.emp{display:flex;align-items:center;gap:20px}.emp b{display:block;margin-bottom:8px;font-weight:400}.emp p{color:var(--mute);font-size:12px;line-height:1.6}
+.emp.col1{flex-direction:column;text-align:center;padding:40px 0}.emp.col1 b{font:500 28px/1.2 Onest,sans-serif;letter-spacing:-.02em}
+.ring{flex:none;width:84px;height:84px;border-radius:50%;border:8px solid var(--line);display:grid;place-items:center;color:var(--mute);font:300 18px Onest,sans-serif}
+.cat{display:grid;grid-template-columns:96px 1fr auto;gap:12px;align-items:center;margin:12px 0}
+.bar2,.cat .bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}.cat .bar i{display:block;height:100%;background:var(--lime);border-radius:4px;transform-origin:left;animation:grow .7s cubic-bezier(.2,.7,.2,1)}@keyframes grow{from{transform:scaleX(0)}}
+.tx{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line);animation:rise .35s both}.tx:first-child{border-top:0}
+.tx .m{flex:1;min-width:0}.tx .m div{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tx .m small,.tx .s small{display:block;color:var(--mute);font-size:12px}
+.tx .s{text-align:right;white-space:nowrap;font-weight:500}.s.i{color:var(--inc)}
+.del{color:var(--mute);font-size:20px;line-height:1;padding:4px 8px}.del:hover{color:var(--exp)}
+.tip{display:flex;gap:14px;padding:22px 24px;border:1px solid var(--line);border-radius:24px;color:var(--mute);font-size:12px;line-height:1.6}.tip b{display:block;color:var(--ink);font-weight:500;font-size:14px;margin-bottom:6px}
+.rate{background:var(--in);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:16px}
+.rr1{display:flex;justify-content:space-between;color:var(--mute);font-size:12px;margin-bottom:10px}.rate b{display:block;font:400 24px/1.2 Onest,sans-serif;margin-bottom:14px}
+.net{font:300 clamp(44px,5vw,64px)/1.05 Onest,sans-serif;letter-spacing:-.05em;margin:20px 0 24px}
+.pb{height:5px;border-radius:3px;background:var(--hline);overflow:hidden}.pb i{display:block;height:100%;width:0;background:var(--hink);border-radius:3px;transition:width .5s}
+.net small{font:400 16px/1 Onest,sans-serif;letter-spacing:0;color:var(--hmute);margin-left:10px}
+.sv{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px}
+.frow .v{font-variant-numeric:tabular-nums}
+.chips.cc{margin-top:14px}
+.ghead{display:flex;justify-content:space-between;align-items:baseline;font-size:17px;margin-bottom:10px}.ghead span{background:var(--lime);color:var(--limeink);border-radius:999px;padding:2px 12px;font-size:13px;font-weight:500}
+.bar.big{height:18px;border-radius:9px;background:var(--line);overflow:hidden}.bar.big i{display:block;height:100%;background:var(--lime);border-radius:9px;transition:width .4s}
+.gnums{display:flex;justify-content:space-between;gap:8px;color:var(--mute);font-size:13px;margin:10px 0 14px}
+.gtap{cursor:pointer}
+.conv{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.2,.7,.2,1)}.conv.open{grid-template-rows:1fr}.conv>div{overflow:hidden;min-height:0}
+.cr{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}.cr .mut{font-size:12px}.cr b{font-weight:500}.cn{color:var(--mute);font-size:12px;margin:8px 0 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.grid .full{grid-column:1/-1}
+.glink{margin-top:14px;color:var(--mute);text-decoration:underline;font-size:13px}
+#gview .chips{margin:14px 0 6px}#gview .add{width:100%;margin-top:14px}#gview .grid .add{margin-top:0;width:auto}
+.calp{padding:12px;left:0;right:auto;width:min(272px,100%)}
+.calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-weight:500;text-transform:capitalize}
+.calg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;animation:rise .25s}.wd{font-style:normal;text-align:center;font-size:11px;color:var(--mute);padding:4px 0}
+.day{aspect-ratio:1;border-radius:50%;font-size:13px;transition:background .15s,color .15s}.day:hover{background:var(--lime);color:var(--limeink)}.day.today{box-shadow:inset 0 0 0 1px var(--mute)}.day.sel{background:var(--pill);color:var(--pillink);font-weight:500}
+.calt{display:block;margin:8px auto 0;padding:5px 16px;border-radius:999px;border:1px solid var(--line);font-size:13px}.calt:hover{background:var(--chip)}
+.bkl{list-style:none;margin:0 0 8px;padding:0}.bkt{margin:2px 8px 8px;color:var(--mute);font-size:12px}
+.bkl li{padding:8px 10px;gap:12px}.bkl li::before{display:none}
+.bki{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;background:var(--chip);color:var(--ink)}
+.bkm{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}.bkm b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bkm small{color:var(--mute);font-size:12px}
+.bkc{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%}
+.bkl li[aria-selected=true]{background:var(--chip)}.bkl li[aria-selected=true] .bki{background:var(--lime);color:var(--limeink)}.bkl li[aria-selected=true] .bkc{background:var(--lime);color:var(--limeink)}
+.bkf{border-top:1px solid var(--line);padding-top:10px}.bkf input{height:44px;margin-bottom:8px}
+.bkrow{display:flex;gap:8px}.bkrow .add,.bkrow .gb{flex:1;margin:0;height:42px;padding:0 8px;font-size:14px;width:auto}
+.bkdel{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:9px 12px;border:1px solid transparent;border-radius:999px;color:var(--exp);font-size:14px}.bkdel:hover{border-color:var(--exp)}.bkdel.sure{background:var(--exp);color:#fff}
+@media (max-width:980px){
+  .c1,.c2{grid-template-columns:minmax(0,1fr)}
+  main{padding:24px 24px 56px}.ph h1{font-size:32px}.ml{font-size:10px}
+}
+@media (max-width:760px){
+  .side{position:fixed;inset:auto 0 0 0;width:auto;height:auto;flex-direction:row;justify-content:center;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));border:0;border-top:1px solid var(--line);background:var(--bg);z-index:30;gap:0}
+  .brand,.hint{display:none}
+  .tabs{flex-direction:row;width:100%;max-width:440px;gap:4px}
+  .tabs button{flex:1;flex-direction:column;justify-content:center;gap:4px;height:54px;padding:0 4px;border-radius:18px;font-size:11px}
+  .tb{height:72px;padding:env(safe-area-inset-top,0px) 16px 0}.bar-r{gap:10px}.month{gap:4px}.vr{display:none}
+  #pa{display:none}.month span{white-space:nowrap;min-width:96px;font-size:13px}.ml{font-size:11px}
+  main{padding:20px 16px 110px}.ph h1{font-size:28px}.ph{align-items:flex-start}.pri{height:46px;padding:0 16px}
+  .card{padding:22px;border-radius:24px}.hero{padding:24px;border-radius:26px}.bigin{font-size:48px!important}
+}
+.ib.round.lbtn{width:auto;min-width:40px;padding:0 12px;font-size:12px;font-weight:500;letter-spacing:.3px}
+.lgd .ddl{left:auto;right:0;width:190px}
+@media (min-width:520px) and (max-width:760px){.bkb span{max-width:150px}.bkb>.ic.acc{display:block}.month span{min-width:120px}}
+@media (max-width:760px){.ib.round{width:36px;height:36px}.ib.round.lbtn{min-width:36px;padding:0 8px}.bkb span{max-width:64px}.bkb{padding:0 12px;gap:8px}.bkb>.ic.acc{display:none}.tb{padding-left:12px;padding-right:12px;gap:6px}.bar-r{gap:4px}.month{gap:0}.month .ib{width:28px}.month span{min-width:0;padding:0 2px;font-size:13px}}
 </style>
 </head>
 <body>
-<main>
-  <div class="top">
-    <div class="dd bk" id="bk"><button type="button" class="ddb bkb" id="bkb" aria-haspopup="listbox" aria-expanded="false" aria-label="Блокноты"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3.5 2.5h7a2 2 0 0 1 2 2v9h-7a2 2 0 0 1-2-2v-9z"/><path d="M5.5 5.5h4"/></svg><span id="bkn"></span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="m3 6 5 5 5-5"/></svg></button><div class="ddl" id="bkp"></div></div>
-    <div class="month" id="month"><button class="ib" id="prev" aria-label="Предыдущий месяц"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M10 3 5 8l5 5"/></svg></button><span id="mlabel"></span><button class="ib" id="next" aria-label="Следующий месяц"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="m6 3 5 5-5 5"/></svg></button></div>
+<div class="app">
+<aside class="side">
+  <div class="brand"><svg class="logo" viewBox="152 61 456 177" fill="none" role="img" aria-label="Lime"><path d="M152 69H186V180C152 180 152 180 186 180C186 190 191 195 202 195H213V225H199C168 225 152 211 152 181V69Z" fill="currentColor"/><path d="M232 118H266V225H232V118Z" fill="currentColor"/><path d="M291 118H324V129C333 120 344 115 357 115C374 115 386 122 393 134C403 122 416 115 432 115C459 115 474 132 474 160V225H440V165C440 152 434 145 423 145C411 145 404 154 404 168V225H370V165C370 152 364 145 353 145C336 145 325 156 325 171V225H291V118Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M607 179H523C526 194 537 202 552 202C565 202 574 197 583 189L603 209C590 223 573 230 551 230C514 230 489 206 489 173C489 140 512 115 547 115C584 115 608 140 608 174L607 179ZM523 157H575C572 144 562 137 548 137C535 137 526 144 523 157Z" fill="currentColor"/><circle cx="249" cy="84" r="18" fill="#C7F63D"/></svg><small>ЛИЧНЫЕ ФИНАНСЫ</small></div>
+  <nav class="tabs" role="tablist"><button role="tab" type="button" data-t="over" aria-selected="true" class="on"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span>Обзор</span></button><button role="tab" type="button" data-t="ops" aria-selected="false"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg><span>Операции</span></button><button role="tab" type="button" data-t="goal" aria-selected="false"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span>Копилка</span></button><button role="tab" type="button" data-t="fop" aria-selected="false"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12h.01"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M22 13a18.15 18.15 0 0 1-20 0"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg><span>ФОП</span></button></nav>
+  <div class="hint"><svg class="ic acc" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg><p>Больше ясности.<br>Меньше финансового шума.</p></div>
+</aside>
+<div class="main">
+<header class="tb">
+  <div class="dd bk" id="bk"><button type="button" class="ddb bkb" id="bkb" aria-haspopup="listbox" aria-expanded="false" aria-label="Блокноты"><svg class="ic acc" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg><span id="bkn"></span><svg class="ic " width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddl" id="bkp"></div></div>
+  <div class="bar-r">
+    <div class="month" id="month"><button class="ib" id="prev" type="button" aria-label="Предыдущий месяц"><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><span id="mlabel"></span><button class="ib" id="next" type="button" aria-label="Следующий месяц"><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div>
+    <i class="vr"></i>
+    <div class="dd lgd" id="lg"><button class="ib round lbtn" id="lgb" type="button" aria-haspopup="listbox" aria-label="Language"></button><ul class="ddl" id="ll" role="listbox"></ul></div><button class="ib round" id="theme" type="button" aria-label="Сменить тему"><span class="moon"><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="sun"><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span></button>
   </div>
+</header>
+<main>
+<div class="ph"><div><h1 id="pt"></h1><p id="pd"></p></div><button class="pri" id="pa" type="button">Добавить операцию</button></div>
 
-  <nav class="tabs" role="tablist"><button role="tab" class="on" aria-selected="true" data-t="over">Обзор</button><button role="tab" aria-selected="false" data-t="ops">Операции</button><button role="tab" aria-selected="false" data-t="goal">Копилка</button><button role="tab" aria-selected="false" data-t="fop">ФОП</button></nav>
-
-<div class="panel" id="p-over">
+<div class="panel" id="p-over"><div class="cols c1">
+ <div class="col">
   <section class="hero">
-    <div class="dd cd" id="cd"><button type="button" class="coin" id="coin" aria-haspopup="listbox" aria-label="Выбрать валюту">₴</button><ul class="ddl" id="cl" role="listbox"></ul></div>
-    <small id="hsm">Баланс за месяц</small>
+    <div class="hh"><small id="hsm">Баланс месяца</small><div class="dd cd" id="cd"><button type="button" class="coin" id="coin" aria-haspopup="listbox" aria-label="Выбрать валюту">UAH</button><ul class="ddl" id="cl" role="listbox"></ul></div></div>
     <div class="bal" id="bal">0 ₴</div>
     <div class="split"><i class="a" id="sa"></i><i class="b" id="sb"></i></div>
-    <div class="legend"><span class="a">Доходы <b id="inc">0 ₴</b></span><span class="b">Расходы <b id="exp">0 ₴</b></span></div>
+    <div class="legend"><span class="a"><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7 7 17"/><path d="M17 17H7V7"/></svg><span><em>Доход</em><b id="inc">0 ₴</b></span></span><span class="b"><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg><span><em>Расход</em><b id="exp">0 ₴</b></span></span></div>
   </section>
+  <section class="card"><div class="ch"><h2>Деньги в движении</h2><span class="mut sm" id="chy"></span></div>
+    <div class="lg"><span><i class="d1"></i>Доход</span><span><i class="d2"></i>Расход</span><span><i class="d3"></i>Прогноз</span></div>
+    <div id="chart"></div></section>
+  <p class="fnote"><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span id="rn"></span></p>
+ </div>
+ <div class="col">
+  <section class="card"><div class="ch"><h2 id="fh">Прогноз</h2><svg class="ic acc" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4M22 5h-4M4 17v2M5 18H3"/></svg></div><div id="fcast"></div></section>
+  <section class="card"><div class="ch"><h2>Расходы по категориям</h2><span class="mut sm" id="cc2">0</span></div><div id="cats"></div></section>
+ </div>
+</div></div>
 
+<div class="panel" id="p-ops" hidden><div class="cols c2">
+ <div class="col">
   <section class="card">
-    <h2>Доходы и расходы по месяцам</h2>
-    <div id="chart"></div>
-    <div class="lg"><span><i class="s1"></i>Доходы</span><span><i class="s2"></i>Расходы</span><span><i class="s3"></i>Прогноз</span></div>
+    <div class="ch"><h2>Новая операция</h2><svg class="ic mut" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></div>
+    <div class="seg"><button id="te" class="on" type="button"><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>Расход</button><button id="ti" type="button"><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7 7 17"/><path d="M17 17H7V7"/></svg>Доход</button></div>
+    <label class="lb" id="amtl">Сумма расхода</label>
+    <div class="amtrow"><input id="amt" class="bigin" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0,00" aria-label="Сумма"><span id="amts" class="sym">₴</span></div>
+    <div class="chips" id="txc"></div>
+    <label class="lb">Категория</label>
+    <input id="cat" type="hidden"><div class="dd" id="dd"><button type="button" class="ddb" id="ddb" aria-haspopup="listbox" aria-expanded="false" aria-label="Категория"><span id="ddv"></span><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><ul class="ddl" id="ddl" role="listbox"></ul></div>
+    <label class="lb">Комментарий · необязательно</label>
+    <input id="note" type="text" placeholder="На что потратили?" aria-label="Комментарий">
+    <label class="lb">Дата операции</label>
+    <input id="date" type="hidden"><div class="dd" id="cal"><button type="button" class="ddb" id="calb" aria-haspopup="dialog" aria-expanded="false" aria-label="Дата"><span id="calv"></span><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button><div class="ddl calp" id="calp"></div></div>
+    <button class="pri w" id="add" type="button"><span id="addl">Добавить расход</span></button>
+    <p class="note">Операция появится в истории и в обзоре месяца.</p>
   </section>
+ </div>
+ <div class="col">
+  <section class="card"><div class="ch"><h2>Операции</h2><span class="mut sm" id="lm"></span></div><div id="list"></div></section>
+  <div class="tip"><svg class="ic mut" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M7 12h10M10 18h4"/></svg><div><b>Категории дают ясность</b><p>Выбирайте категорию для каждой записи. Lime соберёт расходы по категориям на экране «Обзор».</p></div></div>
+ </div>
+</div></div>
 
+<div class="panel" id="p-goal" hidden><div class="cols c3"><section class="card"><div class="ch"><h2>Копилка</h2><svg class="ic acc" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg></div><div id="gview"></div></section><div class="tip"><svg class="ic acc" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg><div><b>Ритм важнее размера</b><p>Небольшие регулярные пополнения помогают двигаться к цели без давления на бюджет.</p></div></div></div></div>
+
+<div class="panel" id="p-fop" hidden><div class="cols c2">
+ <div class="col">
   <section class="card">
-    <h2 id="fh">Прогноз</h2>
-    <div id="fcast"></div>
+    <div class="ch"><h2>Поступления за месяц</h2><span class="mut sm" id="f-cnt">0</span></div>
+    <div id="f-list"></div>
+    <button type="button" class="gb addp" id="f-add">Добавить поступление</button>
+    <div class="rate"><div class="rr1"><span>Курс НБУ</span><span id="f-date"></span></div><b id="f-rate">—</b><button type="button" class="lnk" id="f-ref"><svg class="ic " width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>Обновить курс</button></div>
+    <label class="lb">ЄСВ за месяц · редактируемая сумма</label>
+    <label class="fi"><input id="f-e" type="number" inputmode="decimal" min="0" step="any" aria-label="ЄСВ"><em>₴</em></label>
+    <p class="note l">ЄСВ задаётся отдельно и включается в общую сумму налогов за месяц.</p>
   </section>
-
+  <div class="tip"><svg class="ic acc" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6h4.5"/></svg><div><b>Статус курса</b><p id="f-st"></p></div></div>
+ </div>
+ <div class="col">
   <section class="card">
-    <h2>Расходы по категориям</h2>
-    <div id="cats"></div>
-  </section>
-</div>
-
-<div class="panel" id="p-ops" hidden>
-  <section class="card">
-    <h2>Новая операция</h2>
-    <div class="seg"><button type="button" id="te" class="on">Расход</button><button type="button" id="ti">Доход</button></div>
-    <div class="grid">
-      <input id="amt" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Сумма, ₴" aria-label="Сумма">
-      <input id="cat" type="hidden"><div class="dd" id="dd"><button type="button" class="ddb" id="ddb" aria-haspopup="listbox" aria-expanded="false" aria-label="Категория"><span id="ddv"></span><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="m3 6 5 5 5-5"/></svg></button><ul class="ddl" id="ddl" role="listbox"></ul></div>
-      <div class="chips full" id="txc"></div><input id="note" class="full" type="text" placeholder="Комментарий (необязательно)" aria-label="Комментарий">
-      <input id="date" type="hidden"><div class="dd full" id="cal"><button type="button" class="ddb" id="calb" aria-haspopup="dialog" aria-expanded="false" aria-label="Дата"><span id="calv"></span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="11" rx="3"/><path d="M2 7h12M5 1.5v3M11 1.5v3"/></svg></button><div class="ddl calp" id="calp"></div></div>
-    </div>
-    <button class="add" id="add" type="button">Добавить</button>
-  </section>
-
-  <section class="card">
-    <h2>Операции</h2>
-    <div id="list"></div>
-  </section>
-</div>
-
-<div class="panel" id="p-goal" hidden>
-  <section class="card">
-    <h2>Копилка</h2>
-    <div id="gview"></div>
-  </section>
-</div>
-
-<div class="panel" id="p-fop" hidden>
-  <section class="card">
-    <h2>Сколько получено</h2>
-    <input id="f-a" class="bigin" type="number" inputmode="decimal" min="0" step="any" placeholder="0" aria-label="Полученная сумма">
-    <div class="chips" id="f-cur"></div>
-    <div class="fr"><span>Курс НБУ<small id="f-date"></small></span><b id="f-rate">—</b></div>
+    <div class="ch"><h2>Расчёт налогов</h2><span class="tag">ПРЕДВАРИТЕЛЬНЫЙ</span></div>
+    <div class="fr big"><span>Получено в гривне</span><b id="o-uah">—</b></div>
     <div class="fr"><span>В долларах</span><b id="o-usd">—</b></div>
-    <div class="fr"><span>В гривнах</span><b id="o-uah">—</b></div>
-    <div class="rr"><span id="f-st"></span><button type="button" class="gb" id="f-ref">Обновить курс</button></div>
+    <hr>
+    <div class="frow"><div><b>Единый налог</b><small>5% от полученной суммы</small></div><b class="v" id="o-ep">—</b></div>
+    <div class="frow"><div><b>Военный сбор</b><small>1% от полученной суммы</small></div><b class="v" id="o-vz">—</b></div>
+    <div class="frow"><div><b>ЄСВ</b><small>За месяц · задан вручную</small></div><b class="v" id="o-esv">—</b></div>
+    <hr>
+    <div class="fr tot"><span>Всего налогов и сборов</span><b id="o-tax">—</b></div>
   </section>
-  <section class="card">
-    <h2>Налоги ФОП 3 группы</h2>
-    <div class="fr"><span>Единый налог 5%</span><b id="o-ep">—</b></div>
-    <div class="fr"><span>Военный сбор 1%</span><b id="o-vz">—</b></div>
-    <div class="fr"><span>ЄСВ за месяц</span><label class="fi"><input id="f-e" type="number" inputmode="decimal" min="0" step="any"><em>₴</em></label></div>
-    <div class="fr"><span>Всего налогов</span><b id="o-tax">—</b></div>
-    <div class="fr net"><span>На руки</span><b id="o-net">—</b></div>
-    <button class="add" id="f-save" type="button">Записать в учёт</button>
-    <p class="note">ФОП 3 группы без НДС: 5% единый налог и 1% военный сбор с дохода, ЄСВ — 22% от минимальной зарплаты (1 902,34 ₴ в месяц в 2026 году). Доход пересчитывается в гривны по курсу НБУ. Налоговая берёт курс на дату получения каждой оплаты. Это оценка, сверьтесь с бухгалтером.</p>
-  </section>
+  <section class="card hl"><div class="ch"><span class="mut">На руки после налогов</span><svg class="ic mut" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7 7 17"/><path d="M17 17H7V7"/></svg></div><div class="net" id="o-net">—</div><div class="pb"><i id="f-bar"></i></div><div class="sv"><span class="mut sm">Налоги записываются один раз за месяц и обновляются при новых поступлениях</span><button class="pri" id="f-save" type="button">Записать налоги в учёт</button></div></section>
+ </div>
 </div>
-</main>
+<p class="fnote"><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Расчёт по сохранённым данным, не налоговая рекомендация. Ставки и ЄСВ могут быть неактуальны. Перед уплатой и записью в учёт сверьте суммы с бухгалтером.</span></p></div>
+</main></div></div>
+<script>const LANGS={ru:'Русский',uk:'Українська',en:'English'},LOCS={ru:'ru-RU',uk:'uk-UA',en:'en-US'},LCODE={ru:'RU',uk:'UA',en:'EN'};
+let LANG='ru';
+try{LANG=localStorage.getItem('finance-lang-v1')||(/^uk/i.test(navigator.language)?'uk':/^ru/i.test(navigator.language)?'ru':/^en/i.test(navigator.language)?'en':'ru')}catch(e){}
+if(!LANGS[LANG])LANG='ru';
+const LOC=LOCS[LANG];document.documentElement.lang=LANG;
 
-<script>
 const CATS={e:['Продукты','Транспорт','Жильё','Кафе','Здоровье','Развлечения','Налоги','Прочее'],i:['Зарплата','Подработка','Прочее']};
 const BK='finance-books-v1';
 let books={active:'b1',list:[{id:'b1',name:'Финансы 1'}]},bkConfirm=false;
@@ -420,7 +293,7 @@ const $=id=>document.getElementById(id);
 const CUR={UAH:['₴','Гривна'],USD:['$','Доллар'],EUR:['€','Евро'],PLN:['zł','Злотый'],GBP:['£','Фунт']};
 let cc='UAH';try{cc=localStorage.getItem('finance-cur-v1')||'UAH'}catch(e){}
 if(!CUR[cc])cc='UAH';
-const fmt=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n)+' '+CUR[cc][0];
+const fmt=n=>new Intl.NumberFormat(LOC,{maximumFractionDigits:2}).format(n)+' '+CUR[cc][0];
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -433,7 +306,7 @@ $('ddb').onclick=()=>ddOpen(!$('dd').classList.contains('open'));
 $('ddl').onclick=e=>{const li=e.target.closest('li');if(!li)return;$('cat').value=li.dataset.v;$('ddv').textContent=li.dataset.v;[...$('ddl').children].forEach(x=>x.setAttribute('aria-selected',x===li));ddOpen(false)};
 document.addEventListener('click',e=>{if(!e.target.closest('#dd'))ddOpen(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')ddOpen(false)});
-function setType(t){type=t;$('te').classList.toggle('on',t==='e');$('ti').classList.toggle('on',t==='i');fillCats()}
+function setType(t){type=t;$('te').classList.toggle('on',t==='e');$('ti').classList.toggle('on',t==='i');fillCats();$('amtl').textContent=t==='e'?'Сумма расхода':'Сумма дохода';$('addl').textContent=t==='e'?'Добавить расход':'Добавить доход'}
 $('te').onclick=()=>setType('e');$('ti').onclick=()=>setType('i');
 $('prev').onclick=()=>{cur.setMonth(cur.getMonth()-1);render()};
 $('next').onclick=()=>{cur.setMonth(cur.getMonth()+1);render()};
@@ -441,26 +314,26 @@ $('next').onclick=()=>{cur.setMonth(cur.getMonth()+1);render()};
 $('add').onclick=()=>{
   const a=parseFloat($('amt').value);
   if(!(a>0)){$('amt').focus();return}
-  tx.push({id:Date.now(),t:type,a:a,m:txc,c:$('cat').value,n:$('note').value.trim(),d:$('date').value||iso(new Date())});
+  tx.push({id:Date.now(),t:type,a:a,m:txc,r:RATES[txc],c:$('cat').value,n:$('note').value.trim(),d:$('date').value||iso(new Date())});
   save();$('amt').value='';$('note').value='';
   const d=new Date(tx[tx.length-1].d+'T00:00:00');cur=new Date(d.getFullYear(),d.getMonth(),1);
   render();
 };
 
-function render(){renderInsights();
+function render(){renderInsights();setHead();calcFop();
   const ym=cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0');
-  $('mlabel').textContent=new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(cur);
+  $('mlabel').textContent=new Intl.DateTimeFormat(LOC,{month:'long',year:'numeric'}).format(cur).replace(/\s*[гр]\.$/,'');
   const m=tx.filter(x=>x.d.startsWith(ym)).sort((a,b)=>b.d.localeCompare(a.d)||b.id-a.id);
   const inc=m.filter(x=>x.t==='i').reduce((s,x)=>s+inCur(x),0);
   const exp=m.filter(x=>x.t==='e').reduce((s,x)=>s+inCur(x),0);
-  $('bal').textContent=fmt(inc-exp);$('hsm').textContent='Баланс за месяц'+(m.some(x=>(x.m||'UAH')!==cc)?' · курс НБУ на '+RDATE:'');$('inc').textContent=fmt(inc);$('exp').textContent=fmt(exp);
+  $('bal').textContent=fmt(inc-exp);$('hsm').textContent='Баланс месяца'+(m.some(x=>(x.m||'UAH')!==cc)?' · курс НБУ на '+RDATE:'');$('inc').textContent=fmt(inc);$('exp').textContent=fmt(exp);
   const tot=inc+exp;$('sa').style.width=tot?inc/tot*100+'%':'0';$('sb').style.width=tot?exp/tot*100+'%':'0';
 
   const by={};m.filter(x=>x.t==='e').forEach(x=>by[x.c]=(by[x.c]||0)+inCur(x));
   const rows=Object.entries(by).sort((a,b)=>b[1]-a[1]);
-  $('cats').innerHTML=rows.length?rows.map(([c,v])=>'<div class="cat"><span>'+esc(c)+'</span><div class="bar"><i style="width:'+(v/exp*100)+'%"></i></div><span>'+fmt(v)+'</span></div>').join(''):'<p class="empty">Расходов в этом месяце пока нет.</p>';
+  $('cc2').textContent=rows.length;$('cats').innerHTML=rows.length?rows.map(([c,v])=>'<div class="cat"><span>'+esc(c)+'</span><div class="bar"><i style="width:'+(v/exp*100)+'%"></i></div><span>'+fmt(v)+'</span></div>').join(''):'<div class="emp"><div class="ring"><span>0 '+CUR[cc][0]+'</span></div><div><b>Пока нечего делить</b><p>Добавьте первый расход — здесь появится структура трат за '+new Intl.DateTimeFormat(LOC,{month:'long'}).format(cur)+'.</p></div></div>';
 
-  $('list').innerHTML=m.length?m.map(x=>'<div class="tx"><div class="m"><div>'+esc(x.n||x.c)+'</div><small>'+esc(x.c)+', '+new Date(x.d+'T00:00:00').toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+'</small></div><span class="s '+x.t+'">'+(x.t==='i'?'+':'−')+fm(x.a,x.m||'UAH')+((x.m||'UAH')!==cc?'<small>≈ '+fmt(inCur(x))+'</small>':'')+'</span><button class="del" data-id="'+x.id+'" aria-label="Удалить операцию">×</button></div>').join(''):'<p class="empty">Добавьте первую операцию в форме выше.</p>';
+  $('list').innerHTML=m.length?m.map(x=>'<div class="tx"><div class="m"><div>'+esc(x.n||x.c)+'</div><small>'+esc(x.c)+', '+new Date(x.d+'T00:00:00').toLocaleDateString(LOC,{day:'numeric',month:'short'})+'</small></div><span class="s '+x.t+'">'+(x.t==='i'?'+':'−')+fm(x.a,x.m||'UAH')+((x.m||'UAH')!==cc?'<small>≈ '+fmt(inCur(x))+'</small>':'')+'</span><button class="del" data-id="'+x.id+'" aria-label="Удалить операцию">×</button></div>').join(''):'<div class="emp col1"><b>История начинается с вас</b><p>В этом месяце пока нет операций. Добавьте первый расход или доход в форме.</p></div>';
 }
 $('list').onclick=e=>{const b=e.target.closest('.del');if(!b)return;tx=tx.filter(x=>x.id!=b.dataset.id);save();render()};
 
@@ -512,15 +385,25 @@ $('gview').onclick=e=>{
   }
 };
 
+const MP=['январе','феврале','марте','апреле','мае','июне','июле','августе','сентябре','октябре','ноябре','декабре'];
+let curTab='over';
+const HEAD={over:['Всё под контролем.',()=>'Ваши финансы в '+MP[cur.getMonth()]+' — без лишнего шума.'],ops:['Каждая запись важна.',()=>'Добавляйте доходы и расходы, чтобы видеть полную картину.'],goal:['Дайте планам вырасти.',()=>'От первого взноса до того, что действительно важно.'],fop:['Доход — с ясным итогом.',()=>'Налоги считаются один раз за месяц по всем поступлениям.']};
+function setHead(){$('pt').textContent=HEAD[curTab][0];$('pd').textContent=HEAD[curTab][1]();$('pa').hidden=curTab!=='over';$('lm').textContent=new Intl.DateTimeFormat(LOC,{month:'long',year:'numeric'}).format(cur).replace(/\s*[гр]\.$/,'')}
 document.querySelector('.tabs').onclick=e=>{
   const b=e.target.closest('button');if(!b)return;
+  curTab=b.dataset.t;
   document.querySelectorAll('.tabs button').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});
-  ['over','ops','goal','fop'].forEach(t=>{$('p-'+t).hidden=t!==b.dataset.t});
-  $('month').hidden=b.dataset.t==='goal'||b.dataset.t==='fop';
+  ['over','ops','goal','fop'].forEach(t=>{$('p-'+t).hidden=t!==curTab});
+  $('month').hidden=curTab==='goal';
+  setHead();window.scrollTo(0,0);
 };
+$('pa').onclick=()=>document.querySelector('.tabs [data-t="ops"]').click();
+function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('finance-theme-v1',t)}catch(e){}}
+{let th='dark';try{th=localStorage.getItem('finance-theme-v1')||'dark'}catch(e){}setTheme(th)}
+$('theme').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 
 function renderInsights(){
-  const ym=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'),mo=k=>new Date(cur.getFullYear(),cur.getMonth()+k,1),mn=(d,o)=>new Intl.DateTimeFormat('ru-RU',o).format(d);
+  const ym=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'),mo=k=>new Date(cur.getFullYear(),cur.getMonth()+k,1),mn=(d,o)=>new Intl.DateTimeFormat(LOC,o).format(d);
   const agg={};
   tx.forEach(x=>{const k=x.d.slice(0,7),a=agg[k]||(agg[k]={i:0,e:0,ci:{},ce:{}}),v=inCur(x);if(x.t==='i'){a.i+=v;a.ci[x.c]=(a.ci[x.c]||0)+v}else{a.e+=v;a.ce[x.c]=(a.ce[x.c]||0)+v}});
   const base=[];for(let k=-2;k<=0;k++){const a=agg[ym(mo(k))];if(a)base.push(a)}
@@ -537,20 +420,23 @@ function renderInsights(){
       const h=v>0?Math.max(2,bh*v/max):0;
       g+='<rect class="'+c+f+'" x="'+x+'" y="'+(top+bh-h)+'" width="'+bw+'" height="'+h+'" rx="5"><title>'+t+(it.f?' (прогноз)':'')+': '+fmt(v)+'</title></rect>';
     });
-    g+='<text class="ml'+(it.cur?' cur':'')+'" x="'+cx+'" y="'+(H-8)+'" text-anchor="middle">'+it.l+'</text>';
+    g+='<text class="ml'+(it.cur?' cur':'')+(it.f?' fc':'')+'" x="'+cx+'" y="'+(H-8)+'" text-anchor="middle">'+it.l+'</text>';
   });
   $('chart').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Доходы и расходы по месяцам и прогноз">'+g+'</svg>';
-  $('fh').textContent='Прогноз на '+mn(mo(1),{month:'long'});
+  const MO=mn(mo(1),{month:'long'}),tc=k=>catAvg(k).slice(0,3).map(x=>esc(x[0])).join(', ')||'—';
+  $('fh').textContent=MO.charAt(0).toUpperCase()+MO.slice(1)+' впереди';
+  $('chy').textContent=cur.getFullYear()+' · '+cc;
+  $('rn').textContent='Валюты пересчитаны по курсу НБУ на '+RDATE+'.';
   if(!base.length){$('fcast').innerHTML='<p class="empty">Пока мало данных. Добавьте операции, и здесь появится прогноз на следующий месяц.</p>';return}
-  const lst=arr=>arr.length?arr.map(([c,v])=>'<div class="fr"><span>'+esc(c)+'</span><b>≈ '+fmt(v)+'</b></div>').join(''):'<p class="empty">Нет данных</p>';
-  $('fcast').innerHTML='<div class="fr"><span>Доходы</span><b class="pi">≈ '+fmt(fi)+'</b></div><div class="fr"><span>Расходы</span><b class="pe">≈ '+fmt(fe)+'</b></div><div class="fr net"><span>Остаток</span><b>≈ '+fmt(fi-fe)+'</b></div>'
-   +'<p class="fh3">Ожидаемые доходы</p>'+lst(catAvg('ci'))+'<p class="fh3">Ожидаемые расходы</p>'+lst(catAvg('ce'))
-   +'<p class="fp">Считается как среднее за '+plural(base.length,'месяц','месяца','месяцев')+' с операциями. Суммы в других валютах пересчитаны по курсу НБУ на '+RDATE+'. Чем больше данных, тем точнее прогноз.</p>';
+  $('fcast').innerHTML='<p class="eyb">ПРОГНОЗ · НЕ РЕАЛЬНЫЙ БАЛАНС</p><div class="fbig">≈'+fmt(fi-fe)+'</div><p class="mut sm">Ожидаемый остаток</p><hr>'
+   +'<div class="frow"><div><b>Доход</b><small>'+tc('ci')+'</small></div><b class="v">≈'+fmt(fi)+'</b></div>'
+   +'<div class="frow"><div><b>Расход</b><small>'+tc('ce')+'</small></div><b class="v">≈'+fmt(fe)+'</b></div>'
+   +'<p class="fp">На основе '+plural(base.length,'месяца','месяцев','месяцев').replace(/^1 /,'одного ')+' данных. Прогноз уточнится, когда появятся новые операции.</p>';
 }
 const inCur=x=>x.a*RATES[x.m||'UAH']/RATES[cc];
 function applyCur(){
   const s=CUR[cc][0];
-  $('coin').textContent=s;
+  $('coin').textContent=cc;
   $('cl').innerHTML=Object.entries(CUR).map(([k,v])=>'<li role="option" data-c="'+k+'" aria-selected="'+(k===cc)+'"><span class="cs">'+v[0]+'</span>'+v[1]+'</li>').join('');
   render();renderGoal();
 }
@@ -561,12 +447,12 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')$('cd').classList.re
 
 const CHL='<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M10 3 5 8l5 5"/></svg>',CHR='<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="m6 3 5 5-5 5"/></svg>';
 let cv=new Date();cv.setDate(1);
-function setDate(v){$('date').value=v;$('calv').textContent=new Date(v+'T00:00:00').toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})}
+function setDate(v){$('date').value=v;$('calv').textContent=new Date(v+'T00:00:00').toLocaleDateString(LOC,{day:'numeric',month:'long',year:'numeric'})}
 function calOpen(o){$('cal').classList.toggle('open',o);$('calb').setAttribute('aria-expanded',o)}
 function calRender(){
   const y=cv.getFullYear(),m=cv.getMonth(),p=n=>String(n).padStart(2,'0');
   const first=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate(),sel=$('date').value,today=iso(new Date());
-  let h='<div class="calh"><button type="button" class="ib" data-n="-1" aria-label="Предыдущий месяц">'+CHL+'</button><span>'+new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(cv)+'</span><button type="button" class="ib" data-n="1" aria-label="Следующий месяц">'+CHR+'</button></div><div class="calg">';
+  let h='<div class="calh"><button type="button" class="ib" data-n="-1" aria-label="Предыдущий месяц">'+CHL+'</button><span>'+new Intl.DateTimeFormat(LOC,{month:'long',year:'numeric'}).format(cv).replace(/\s*[гр]\.$/,'')+'</span><button type="button" class="ib" data-n="1" aria-label="Следующий месяц">'+CHR+'</button></div><div class="calg">';
   ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].forEach(d=>h+='<i class="wd">'+d+'</i>');
   for(let i=0;i<first;i++)h+='<i></i>';
   for(let d=1;d<=days;d++){const s=y+'-'+p(m+1)+'-'+p(d);h+='<button type="button" class="day'+(s===sel?' sel':'')+(s===today?' today':'')+'" data-d="'+s+'">'+d+'</button>'}
@@ -577,35 +463,42 @@ $('calp').onclick=e=>{const b=e.target.closest('button');if(!b)return;
   if(b.dataset.n){cv.setMonth(cv.getMonth()+Number(b.dataset.n));calRender()}
   else if(b.dataset.d){setDate(b.dataset.d);calOpen(false)}
   else if(b.dataset.today){setDate(iso(new Date()));calOpen(false)}};
-document.addEventListener('click',e=>{if(!e.target.closest('#cal'))calOpen(false)});
+document.addEventListener('click',e=>{if(!e.composedPath().includes($('cal')))calOpen(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')calOpen(false)});
 
 const FK='finance-fop-v2',SYM={UAH:'₴',USD:'$',EUR:'€',GBP:'£',PLN:'zł'};
 let RATES={UAH:1,USD:45.6008,EUR:50.8522,GBP:60.7909,PLN:11.5505},RDATE='28.10.2026',RLIVE=false,fc='USD',fop={uah:0,tax:0};
 const fnum=id=>parseFloat($('f-'+id).value)||0;
-const fm=(n,c)=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n)+' '+SYM[c];
-try{const sv=JSON.parse(localStorage.getItem(FK)||'{}');if(sv.a!==undefined)$('f-a').value=sv.a;if(sv.e!==undefined)$('f-e').value=sv.e;if(SYM[sv.c])fc=sv.c}catch(e){}
+const fm=(n,c)=>new Intl.NumberFormat(LOC,{maximumFractionDigits:2}).format(n)+' '+SYM[c];
+try{const sv=JSON.parse(localStorage.getItem(FK)||'{}');if(sv.e!==undefined)$('f-e').value=sv.e}catch(e){}
 if(!$('f-e').value)$('f-e').value='1902.34';
-function fSave(){try{localStorage.setItem(FK,JSON.stringify({a:$('f-a').value,e:$('f-e').value,c:fc}))}catch(e){}}
-function renderChips(){$('f-cur').innerHTML=Object.keys(SYM).map(c=>'<button type="button" class="chip'+(c===fc?' on':'')+'" data-c="'+c+'">'+c+'</button>').join('')}
+function fSave(){try{localStorage.setItem(FK,JSON.stringify({e:$('f-e').value}))}catch(e){}}
 function calcFop(){
-  const a=fnum('a'),r=RATES[fc],uah=a*r,esv=fnum('e'),ep=uah*.05,vz=uah*.01,tax=ep+vz+esv,ok=a>0,d='—';
+  const ym=cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0');
+  const parts=tx.filter(x=>x.t==='i'&&x.d.startsWith(ym)).sort((a,b)=>a.d.localeCompare(b.d)||a.id-b.id);
+  const rt=x=>(x.m||'UAH')==='UAH'?1:(x.r||RATES[x.m]);
+  const uah=parts.reduce((t,x)=>t+x.a*rt(x),0),esv=fnum('e'),ep=uah*.05,vz=uah*.01,tax=ep+vz+esv,ok=parts.length>0,d='—';
   const sub=n=>' <small>≈ '+fm(n/RATES.USD,'USD')+'</small>';
+  $('f-cnt').textContent=parts.length;
+  $('f-list').innerHTML=ok?parts.map(x=>{const m=x.m||'UAH';return '<div class="tx"><div class="m"><div>'+esc(x.n||x.c)+'</div><small>'+new Date(x.d+'T00:00:00').toLocaleDateString(LOC,{day:'numeric',month:'short'})+(m!=='UAH'?' · курс '+new Intl.NumberFormat(LOC,{maximumFractionDigits:4}).format(rt(x)):'')+'</small></div><span class="s i">'+fm(x.a,m)+(m!=='UAH'?'<small>≈ '+fm(x.a*rt(x),'UAH')+'</small>':'')+'</span></div>'}).join(''):'<p class="empty">В этом месяце поступлений пока нет. Добавьте доход в разделе «Операции», и он появится здесь.</p>';
   $('f-date').textContent=' на '+RDATE;
-  $('f-rate').textContent=fc==='UAH'?'—':'1 '+SYM[fc]+' = '+new Intl.NumberFormat('ru-RU',{maximumFractionDigits:4}).format(r)+' ₴';
-  $('o-usd').textContent=ok?fm(uah/RATES.USD,'USD'):d;
+  $('f-rate').textContent='1 $ = '+new Intl.NumberFormat(LOC,{maximumFractionDigits:4}).format(RATES.USD)+' ₴';
   $('o-uah').textContent=ok?fm(uah,'UAH'):d;
+  $('o-usd').textContent=ok?fm(uah/RATES.USD,'USD'):d;
   $('o-ep').innerHTML=ok?fm(ep,'UAH')+sub(ep):d;
   $('o-vz').innerHTML=ok?fm(vz,'UAH')+sub(vz):d;
+  $('o-esv').textContent=fm(esv,'UAH');
   $('o-tax').innerHTML=ok?fm(tax,'UAH')+sub(tax):d;
   $('o-net').innerHTML=ok?fm(uah-tax,'UAH')+sub(uah-tax):d;
+  $('f-bar').style.width=(ok&&uah>0?Math.max(0,Math.min(100,(uah-tax)/uah*100)):0)+'%';
+  $('f-save').textContent=tx.some(x=>x.fop===ym)?'Обновить налоги в учёте':'Записать налоги в учёт';
   $('f-st').textContent=(RLIVE&&!RFAIL)?'Курс с сайта НБУ на '+RDATE+', обновлён '+fmtT(LAST)+'. Следующее обновление: '+nextRun()+'.':'Не удалось обновить: сайт НБУ недоступен из этого окна. Курс на '+RDATE+(RLIVE?', обновлён '+fmtT(LAST):'')+'.';
-  fop={uah:uah,tax:tax};
+  fop={uah:uah,tax:tax,ym:ym,ok:ok};
 }
 const RK='finance-rates-v1',TK='finance-rates-try-v1';
 let LAST=0,LASTTRY=0,RFAIL=false;
 try{const rc=JSON.parse(localStorage.getItem(RK)||'null');if(rc&&rc.r&&rc.r.USD){RATES=rc.r;RDATE=rc.d;RLIVE=true;LAST=rc.t||0}LASTTRY=+localStorage.getItem(TK)||0}catch(e){}
-const fmtT=t=>new Date(t).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+const fmtT=t=>new Date(t).toLocaleString(LOC,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
 const slot=()=>{const n=new Date(),t=new Date(n.getFullYear(),n.getMonth(),n.getDate(),12,0).getTime();return n.getTime()>=t?t:t-864e5};
 const nextRun=()=>new Date().getHours()<12?'сегодня в 12:00':'завтра в 12:00';
 async function loadRates(){
@@ -630,20 +523,22 @@ async function loadRates(){
 function autoRates(){if(LASTTRY<slot())loadRates()}
 setInterval(autoRates,60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)autoRates()});
-$('f-cur').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;fc=b.dataset.c;fSave();renderChips();calcFop()};
+$('f-add').onclick=()=>{document.querySelector('.tabs [data-t="ops"]').click();setType('i');$('amt').focus()};
 $('f-ref').onclick=loadRates;
 document.querySelectorAll('#p-fop input').forEach(i=>i.oninput=()=>{calcFop();fSave()});
 $('f-save').onclick=()=>{
-  if(!(fop.uah>0)){$('f-a').focus();return}
-  const id=Date.now(),d=iso(new Date());
-  tx.push({id:id,t:'i',m:'UAH',a:+fop.uah.toFixed(2),c:'Зарплата',n:'Доход ФОП, '+fnum('a')+' '+fc,d:d},{id:id+1,t:'e',m:'UAH',a:+fop.tax.toFixed(2),c:'Налоги',n:'Единый налог, военный сбор, ЄСВ',d:d});
-  save();
-  cur=new Date();cur.setDate(1);applyCur();
-  $('f-save').textContent='Записано ✓';setTimeout(()=>{$('f-save').textContent='Записать в учёт'},1600);
+  if(!fop.ok)return;
+  const [y,mo]=fop.ym.split('-').map(Number),now=new Date();
+  const d=(now.getFullYear()===y&&now.getMonth()===mo-1)?iso(now):iso(new Date(y,mo,0));
+  const name=new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(new Date(y,mo-1,1)).replace(/\s*[гр]\.$/,'');
+  const ex=tx.find(x=>x.fop===fop.ym),a=+fop.tax.toFixed(2);
+  if(ex){ex.a=a;ex.d=d}else tx.push({id:Date.now(),t:'e',m:'UAH',a:a,c:'Налоги',n:'Налоги ФОП за '+name+' (5% + 1% + ЄСВ)',d:d,fop:fop.ym});
+  save();render();
+  $('f-save').textContent='Записано ✓';setTimeout(calcFop,1600);
 };
 
 let txc=cc;
-function renderTxc(){$('txc').innerHTML=Object.keys(SYM).map(c=>'<button type="button" class="chip'+(c===txc?' on':'')+'" data-c="'+c+'">'+c+'</button>').join('');$('amt').placeholder='Сумма, '+SYM[txc]}
+function renderTxc(){$('txc').innerHTML=Object.keys(SYM).map(c=>'<button type="button" class="chip'+(c===txc?' on':'')+'" data-c="'+c+'">'+c+'</button>').join('');$('amts').textContent=SYM[txc]}
 $('txc').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;txc=b.dataset.c;renderTxc()};
 function loadBook(){
   KEY=bkey('finance-v1',books.active);GKEY=bkey('finance-goal-v1',books.active);
@@ -682,10 +577,158 @@ $('bkp').onclick=e=>{
     books.list=books.list.filter(x=>x.id!==books.active);books.active=books.list[0].id;bookChanged();
   }
 };
-document.addEventListener('click',e=>{if(!e.target.closest('#bk')){$('bk').classList.remove('open');$('bkb').setAttribute('aria-expanded','false')}});
+document.addEventListener('click',e=>{if(!e.composedPath().includes($('bk'))){$('bk').classList.remove('open');$('bkb').setAttribute('aria-expanded','false')}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('bk').classList.remove('open')});
 
-setDate(iso(new Date()));fillCats();applyCur();renderChips();renderTxc();calcFop();renderBooks();loadRates();
+setDate(iso(new Date()));fillCats();applyCur();renderTxc();calcFop();renderBooks();loadRates();
+
+$('lgb').textContent=LCODE[LANG];
+$('ll').innerHTML=Object.keys(LANGS).map(k=>'<li role="option" data-l="'+k+'" aria-selected="'+(k===LANG)+'">'+LANGS[k]+'</li>').join('');
+$('lgb').onclick=()=>$('lg').classList.toggle('open');
+$('ll').onclick=e=>{const li=e.target.closest('li');if(!li)return;try{localStorage.setItem('finance-lang-v1',li.dataset.l);sessionStorage.setItem('finance-tab-v1',curTab)}catch(x){}location.reload()};
+document.addEventListener('click',e=>{if(!e.composedPath().includes($('lg')))$('lg').classList.remove('open')});
+
+const D=[
+["1% от полученной суммы","1% від отриманої суми","1% of the amount received"],
+["5% от полученной суммы","5% від отриманої суми","5% of the amount received"],
+["ЄСВ","ЄСВ","ESV"],
+["ЄСВ за месяц · редактируемая сумма","ЄСВ за місяць · редагована сума","ESV per month · editable amount"],
+["ЄСВ задаётся отдельно и включается в общую сумму налогов за месяц.","ЄСВ задається окремо й входить до загальної суми податків за місяць.","ESV is set separately and included in the monthly tax total."],
+["Баланс месяца","Баланс місяця","Monthly balance"],
+["Больше ясности.","Більше ясності.","More clarity."],
+["Меньше финансового шума.","Менше фінансового шуму.","Less financial noise."],
+["В долларах","У доларах","In dollars"],
+["Военный сбор","Військовий збір","Military levy"],
+["Всего налогов и сборов","Усього податків і зборів","Total taxes and levies"],
+["Выбирайте категорию для каждой записи. Lime соберёт расходы по категориям на экране «Обзор».","Обирайте категорію для кожного запису. Lime збере витрати за категоріями на екрані «Огляд».","Pick a category for every entry. Lime will group expenses by category on the Overview screen."],
+["Дата операции","Дата операції","Transaction date"],
+["Деньги в движении","Гроші в русі","Money in motion"],
+["Добавить операцию","Додати операцію","Add transaction"],
+["Добавить поступление","Додати надходження","Add income"],
+["Добавить расход","Додати витрату","Add expense"],
+["Добавить доход","Додати дохід","Add income"],
+["Доход","Дохід","Income"],
+["Расход","Витрата","Expense"],
+["Доходы","Доходи","Income"],
+["Расходы","Витрати","Expenses"],
+["Единый налог","Єдиний податок","Single tax"],
+["За месяц · задан вручную","За місяць · задано вручну","Monthly · set manually"],
+["Записать налоги в учёт","Записати податки в облік","Record taxes"],
+["Обновить налоги в учёте","Оновити податки в обліку","Update recorded taxes"],
+["Категории дают ясность","Категорії дають ясність","Categories bring clarity"],
+["Категория","Категорія","Category"],
+["Комментарий · необязательно","Коментар · необов’язково","Comment · optional"],
+["Комментарий","Коментар","Comment"],
+["Копилка","Скарбничка","Savings"],
+["Курс НБУ","Курс НБУ","NBU rate"],
+["ЛИЧНЫЕ ФИНАНСЫ","ОСОБИСТІ ФІНАНСИ","PERSONAL FINANCE"],
+["На руки после налогов","На руки після податків","Take-home after taxes"],
+["Налоги записываются один раз за месяц и обновляются при новых поступлениях","Податки записуються один раз на місяць і оновлюються при нових надходженнях","Taxes are recorded once a month and updated when new income arrives"],
+["Небольшие регулярные пополнения помогают двигаться к цели без давления на бюджет.","Невеликі регулярні поповнення допомагають рухатися до цілі без тиску на бюджет.","Small regular deposits move you toward the goal without straining your budget."],
+["Новая операция","Нова операція","New transaction"],
+["Обзор","Огляд","Overview"],
+["Обновить курс","Оновити курс","Refresh rate"],
+["Операции","Операції","Transactions"],
+["Операция появится в истории и в обзоре месяца.","Операція з’явиться в історії та в огляді місяця.","The transaction will appear in history and in the monthly overview."],
+["ПРЕДВАРИТЕЛЬНЫЙ","ПОПЕРЕДНІЙ","PRELIMINARY"],
+["Получено в гривне","Отримано в гривні","Received in hryvnia"],
+["Поступления за месяц","Надходження за місяць","Income this month"],
+["Прогноз","Прогноз","Forecast"],
+["Расходы по категориям","Витрати за категоріями","Expenses by category"],
+["Расчёт налогов","Розрахунок податків","Tax calculation"],
+["Расчёт по сохранённым данным, не налоговая рекомендация. Ставки и ЄСВ могут быть неактуальны. Перед уплатой и записью в учёт сверьте суммы с бухгалтером.","Розрахунок за збереженими даними, не податкова рекомендація. Ставки та ЄСВ можуть бути неактуальними. Перед сплатою й записом в облік звірте суми з бухгалтером.","Calculation based on saved data, not tax advice. Rates and ESV may be outdated. Check the amounts with an accountant before paying or recording."],
+["Ритм важнее размера","Ритм важливіший за розмір","Rhythm matters more than size"],
+["Статус курса","Статус курсу","Rate status"],
+["Сумма расхода","Сума витрати","Expense amount"],
+["Сумма дохода","Сума доходу","Income amount"],
+["ФОП","ФОП","FOP"],
+["Блокноты","Блокноти","Notebooks"],
+["Выбрать валюту","Обрати валюту","Choose currency"],
+["Дата","Дата","Date"],
+["На что потратили?","На що витратили?","What did you spend on?"],
+["Предыдущий месяц","Попередній місяць","Previous month"],
+["Следующий месяц","Наступний місяць","Next month"],
+["Сменить тему","Змінити тему","Toggle theme"],
+["Сумма","Сума","Amount"],
+["Продукты","Продукти","Groceries"],["Транспорт","Транспорт","Transport"],["Жильё","Житло","Housing"],["Кафе","Кафе","Cafés"],["Здоровье","Здоров’я","Health"],["Развлечения","Розваги","Entertainment"],["Налоги","Податки","Taxes"],["Прочее","Інше","Other"],["Зарплата","Зарплата","Salary"],["Подработка","Підробіток","Side income"],
+["Гривна","Гривня","Hryvnia"],["Доллар","Долар","Dollar"],["Евро","Євро","Euro"],["Злотый","Злотий","Zloty"],["Фунт","Фунт","Pound"],
+["Пока нечего делить","Поки нічого ділити","Nothing to split yet"],
+["История начинается с вас","Історія починається з вас","Your history starts with you"],
+["В этом месяце пока нет операций. Добавьте первый расход или доход в форме.","У цьому місяці ще немає операцій. Додайте першу витрату чи дохід у формі.","No transactions this month yet. Add your first expense or income in the form."],
+["На что копим?","На що збираємо?","What are you saving for?"],
+["Название цели","Назва цілі","Goal name"],["Сумма цели","Сума цілі","Goal amount"],["Создать цель","Створити ціль","Create goal"],["Цель достигнута","Ціль досягнуто","Goal reached"],["Другие валюты","Інші валюти","Other currencies"],["Пополнить","Поповнити","Deposit"],["Снять","Зняти","Withdraw"],["Сумма для копилки","Сума для скарбнички","Amount for savings"],["Точно удалить цель?","Точно видалити ціль?","Delete the goal for sure?"],["Удалить цель","Видалити ціль","Delete goal"],
+["Всё под контролем.","Усе під контролем.","Everything under control."],
+["Каждая запись важна.","Кожен запис важливий.","Every entry matters."],
+["Добавляйте доходы и расходы, чтобы видеть полную картину.","Додавайте доходи й витрати, щоб бачити повну картину.","Add income and expenses to see the full picture."],
+["Дайте планам вырасти.","Дайте планам зрости.","Let your plans grow."],
+["От первого взноса до того, что действительно важно.","Від першого внеску до того, що справді важливо.","From the first deposit to what truly matters."],
+["Доход — с ясным итогом.","Дохід — з чітким підсумком.","Income — with a clear total."],
+["Налоги считаются один раз за месяц по всем поступлениям.","Податки рахуються раз на місяць за всіма надходженнями.","Taxes are calculated once a month on all income."],
+["Доходы и расходы по месяцам и прогноз","Доходи й витрати за місяцями та прогноз","Income and expenses by month and forecast"],
+["Пока мало данных. Добавьте операции, и здесь появится прогноз на следующий месяц.","Поки замало даних. Додайте операції, і тут з’явиться прогноз на наступний місяць.","Not enough data yet. Add transactions and a forecast for next month will appear here."],
+["ПРОГНОЗ · НЕ РЕАЛЬНЫЙ БАЛАНС","ПРОГНОЗ · НЕ РЕАЛЬНИЙ БАЛАНС","FORECAST · NOT AN ACTUAL BALANCE"],
+["Ожидаемый остаток","Очікуваний залишок","Expected remainder"],
+["Пн","Пн","Mo"],["Вт","Вт","Tu"],["Ср","Ср","We"],["Чт","Чт","Th"],["Пт","Пт","Fr"],["Сб","Сб","Sa"],["Вс","Нд","Su"],
+["Сегодня","Сьогодні","Today"],
+["В этом месяце поступлений пока нет. Добавьте доход в разделе «Операции», и он появится здесь.","У цьому місяці надходжень поки немає. Додайте дохід у розділі «Операції», і він з’явиться тут.","No income this month yet. Add income in Transactions and it will appear here."],
+["Обновляю курс…","Оновлюю курс…","Refreshing rate…"],
+["Записано ✓","Записано ✓","Saved ✓"],
+["Мои блокноты","Мої блокноти","My notebooks"],
+["Название блокнота","Назва блокнота","Notebook name"],
+["Создать","Створити","Create"],["Переименовать","Перейменувати","Rename"],["Удалить навсегда?","Видалити назавжди?","Delete permanently?"],["Удалить этот блокнот","Видалити цей блокнот","Delete this notebook"],
+["Удалить операцию","Видалити операцію","Delete transaction"]
+];
+const MAP={};D.forEach(r=>{MAP[r[0]]=LANG==='uk'?r[1]:r[2]});
+const RN=['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'],RP=['январе','феврале','марте','апреле','мае','июне','июле','августе','сентябре','октябре','ноябре','декабре'];
+const UN=['січень','лютий','березень','квітень','травень','червень','липень','серпень','вересень','жовтень','листопад','грудень'],UP=['січні','лютому','березні','квітні','травні','червні','липні','серпні','вересні','жовтні','листопаді','грудні'];
+const EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const L=(u,e)=>LANG==='uk'?u:e;
+const ukPl=(n,a,b,c)=>{const m=n%100,d=n%10;return m>10&&m<20?c:d===1?a:d>1&&d<5?b:c};
+const PAT=[
+[/^Баланс месяца · курс НБУ на (.+)$/,m=>L('Баланс місяця · курс НБУ на ','Monthly balance · NBU rate on ')+m[1]],
+[/^Добавьте первый расход — здесь появится структура трат за (.+)\.$/,m=>L('Додайте першу витрату — тут з’явиться структура витрат за '+m[1]+'.','Add your first expense — your spending breakdown for '+m[1]+' will appear here.')],
+[/^Накоплено (.+) из (.+)$/,m=>L('Накопичено '+m[1]+' з '+m[2],'Saved '+m[1]+' of '+m[2])],
+[/^из (.+)$/,m=>L('з ','of ')+m[1]],
+[/^Осталось (.+)$/,m=>L('Залишилось '+m[1],m[1]+' left')],
+[/^Курс НБУ на (.+)$/,m=>L('Курс НБУ на ','NBU rate on ')+m[1]],
+[/^на (\d[\d.]+)$/,m=>L('на ','on ')+m[1]],
+[/^(.+) · курс (\S+)$/,m=>m[1]+L(' · курс ',' · rate ')+m[2]],
+[/^(.+) впереди$/,m=>L(m[1]+' попереду',m[1]+' ahead')],
+[/^Валюты пересчитаны по курсу НБУ на (.+)\.$/,m=>L('Валюти перераховано за курсом НБУ на ','Currencies converted at the NBU rate on ')+m[1]+'.'],
+[/^Ваши финансы в (.+) — без лишнего шума\.$/,m=>{const i=RP.indexOf(m[1]);return L('Ваші фінанси у '+(UP[i]||m[1])+' — без зайвого шуму.','Your finances for '+(EN[i]||m[1])+' — without the noise.')}],
+[/^Курс с сайта НБУ на (.+), обновлён (.+)\. Следующее обновление: (сегодня|завтра) в 12:00\.$/,m=>L('Курс із сайту НБУ на '+m[1]+', оновлено '+m[2]+'. Наступне оновлення: '+(m[3]==='сегодня'?'сьогодні':'завтра')+' о 12:00.','Rate from the NBU site on '+m[1]+', updated '+m[2]+'. Next update: '+(m[3]==='сегодня'?'today':'tomorrow')+' at 12:00.')],
+[/^Не удалось обновить: сайт НБУ недоступен из этого окна\. Курс на (\S+?)(?:, обновлён (.+))?\.$/,m=>L('Не вдалося оновити: сайт НБУ недоступний із цього вікна. Курс на '+m[1]+(m[2]?', оновлено '+m[2]:'')+'.','Could not refresh: the NBU site is not reachable from this window. Rate on '+m[1]+(m[2]?', updated '+m[2]:'')+'.')],
+[/^Налоги ФОП за (\S+) (\d{4}) \(5% \+ 1% \+ ЄСВ\)$/,m=>{const i=RN.indexOf(m[1]);return L('Податки ФОП за '+(UN[i]||m[1])+' '+m[2]+' (5% + 1% + ЄСВ)','FOP taxes for '+(EN[i]||m[1])+' '+m[2]+' (5% + 1% + ESV)')}],
+[/^(\d+) (операция|операции|операций)$/,m=>{const n=+m[1];return L(n+' '+ukPl(n,'операція','операції','операцій'),n+(n===1?' transaction':' transactions'))}],
+[/^Финансы (\d+)$/,m=>L('Фінанси ','Finance ')+m[1]],
+[/^(Доходы|Расходы)( \(прогноз\))?: (.+)$/,m=>{const inc=m[1]==='Доходы';return L((inc?'Доходи':'Витрати')+(m[2]?' (прогноз)':'')+': '+m[3],(inc?'Income':'Expenses')+(m[2]?' (forecast)':'')+': '+m[3])}],
+[/^Нужная сумма, (.+)$/,m=>L('Потрібна сума, ','Amount needed, ')+m[1]],
+[/^Сумма, (.+)$/,m=>L('Сума, ','Amount, ')+m[1]],
+[/^На основе (?:одного месяца|(\d+) месяцев) данных\. Прогноз уточнится, когда появятся новые операции\.$/,m=>{const n=+(m[1]||1);return L('На основі '+(n===1?'одного місяця':n+' місяців')+' даних. Прогноз уточниться, коли з’являться нові операції.','Based on '+n+' month'+(n===1?'':'s')+' of data. The forecast will refine as new transactions appear.')}]
+];
+function T(v){
+  const k=v.trim();if(!k)return v;
+  if(MAP[k])return v.replace(k,MAP[k]);
+  for(const [re,f] of PAT){const m=k.match(re);if(m)return v.replace(k,f(m))}
+  const m2=k.match(/^([^,]+), (.+)$/);if(m2&&MAP[m2[1]])return v.replace(k,MAP[m2[1]]+', '+m2[2]);
+  if(k.includes(', ')){const p=k.split(', ');if(p.every(x=>MAP[x]))return v.replace(k,p.map(x=>MAP[x]).join(', '))}
+  return v;
+}
+const ATTR=['placeholder','aria-label'];
+function trAttrs(el){ATTR.forEach(a=>{if(el.hasAttribute&&el.hasAttribute(a)){const v=el.getAttribute(a),t=T(v);if(t!==v)el.setAttribute(a,t)}})}
+function trNode(n){
+  if(n.nodeType===3){const v=n.nodeValue,t=T(v);if(t!==v)n.nodeValue=t}
+  else if(n.nodeType===1&&n.tagName!=='SCRIPT'&&n.tagName!=='STYLE'){trAttrs(n);n.childNodes.forEach(trNode)}
+}
+if(LANG!=='ru'){
+  trNode(document.body);
+  new MutationObserver(ms=>ms.forEach(m=>{
+    if(m.type==='characterData')trNode(m.target);
+    else if(m.type==='attributes')trAttrs(m.target);
+    else m.addedNodes.forEach(trNode);
+  })).observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:ATTR});
+}
+try{const rt=sessionStorage.getItem('finance-tab-v1');if(rt){sessionStorage.removeItem('finance-tab-v1');const b=document.querySelector('.tabs [data-t="'+rt+'"]');if(b)b.click()}}catch(e){}
 </script>
 </body>
 </html>
